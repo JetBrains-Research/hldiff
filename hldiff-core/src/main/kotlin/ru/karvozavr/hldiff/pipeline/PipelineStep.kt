@@ -7,7 +7,7 @@ abstract class PipelineStep<PayloadT> {
 
     private var result: Optional<PayloadT> = Optional.empty()
 
-    abstract fun processData(payload: PayloadT): PayloadT
+    protected abstract fun processData(payload: PayloadT): PayloadT
 
     fun apply(payload: PayloadT): PayloadT {
         result = Optional.of(processData(payload))

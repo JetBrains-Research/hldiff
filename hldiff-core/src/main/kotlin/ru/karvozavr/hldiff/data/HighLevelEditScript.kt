@@ -1,5 +1,5 @@
 package ru.karvozavr.hldiff.data
 
-class HighLevelEditScript {
- // TODO
-}
+import ru.karvozavr.hldiff.actions.HighLevelAction
+
+class HighLevelEditScript : ArrayList<HighLevelAction>()
