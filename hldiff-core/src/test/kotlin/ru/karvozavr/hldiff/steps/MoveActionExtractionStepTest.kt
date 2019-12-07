@@ -1,11 +1,9 @@
 package ru.karvozavr.hldiff.steps
 
+import org.junit.Assert.assertTrue
 import org.junit.Test
-
-import org.junit.Assert.*
 import ru.karvozavr.hldiff.actions.MoveAction
 import ru.karvozavr.hldiff.data.HighLevelDiff
-import ru.karvozavr.hldiff.data.HighLevelEditScript
 import ru.karvozavr.hldiff.preprocessing.FilePairPreprocessor
 import java.nio.file.Paths
 

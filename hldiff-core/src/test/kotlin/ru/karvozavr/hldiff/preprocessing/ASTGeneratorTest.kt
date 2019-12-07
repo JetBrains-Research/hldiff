@@ -7,11 +7,15 @@ import java.nio.file.Paths
 
 class ASTGeneratorTest {
 
+    /**
+     * Note:
+     */
     @Test
     fun smokeTest() {
         val file = Paths.get(javaClass.classLoader.getResource("a.java")!!.toURI()).toString()
         val generator = ASTGenerator(file)
+        val ast = generator.getAST()
 
-        assertEquals(generator.getAST().children[0].type.toString(), "TypeDeclaration")
+        assertEquals(ast.children[0].type.toString(), "TypeDeclaration")
     }
 }

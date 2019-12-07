@@ -19,18 +19,15 @@ class MoveActionExtractionStep : PipelineStep<HighLevelDiff>() {
 
         for (action in actions) {
             if (action is Move) {
-                val moveAction = MoveAction(node = action.node, label = action.node.type.toString(), newParent = action.parent, position = action.position)
+                val moveAction = MoveAction(node = action.node, type = action.node.type.toString(), newParent = action.parent, position = action.position)
                 highLevelActions.add(moveAction)
             } else {
                 newActions.add(action)
             }
         }
 
-        return HighLevelDiff(
-                treeBefore = diff.treeBefore,
-                treeAfter = diff.treeAfter,
+        return diff.copy(
                 lowLevelEditScript = newActions,
-                highLevelEditScript = highLevelActions,
-                mappings = diff.mappings)
+                highLevelEditScript = highLevelActions)
     }
 }

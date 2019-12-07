@@ -1,9 +1,9 @@
 package ru.karvozavr.hldiff.steps
 
-interface TreeTraversal<TreeT, ContextT> {
+interface TreeTraversal<TreeT> {
 
-    fun traverse(root: TreeT, context: ContextT)
+    fun traverse(root: TreeT)
 
-    fun nodeHandler(node: TreeT, context: ContextT)
+    fun nodeHandler(node: TreeT)
 }
 
