@@ -3,7 +3,6 @@ package ru.karvozavr.hldiff.steps
 import com.github.gumtreediff.actions.model.Action
 import com.github.gumtreediff.actions.model.Move
 import ru.karvozavr.hldiff.actions.HighLevelAction
-import ru.karvozavr.hldiff.actions.MoveAction
 import ru.karvozavr.hldiff.data.HighLevelDiff
 import ru.karvozavr.hldiff.pipeline.PipelineStep
 
