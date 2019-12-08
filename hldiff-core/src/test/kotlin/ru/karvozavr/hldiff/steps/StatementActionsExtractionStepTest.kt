@@ -22,5 +22,6 @@ class StatementActionsExtractionStepTest {
         val afterMove = moveExtractionStep.apply(hlDiff)
 
         val result = statementsActionsExtractionStep.apply(afterMove)
+        result.highLevelEditScript.forEach { println(it) }
     }
 }

@@ -13,7 +13,7 @@ abstract class HighLevelAction(val node: ITree) {
             val nodeType = if (isPartial) node.type.toString() else node.type.toString() + "Part"
 
             return when (lowLevelAction) {
-                is Delete -> TODO()
+                is Delete -> DeleteAction(node, nodeType)
                 is Update -> TODO()
                 is Move -> {
                     InsertAction(node, nodeType, lowLevelAction.parent, lowLevelAction.position)

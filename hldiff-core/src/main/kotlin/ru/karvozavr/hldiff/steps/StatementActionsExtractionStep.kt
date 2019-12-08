@@ -12,9 +12,8 @@ class StatementActionsExtractionStep(private val languageInfo: LanguageInfo) : P
     override fun processData(payload: HighLevelDiff): HighLevelDiff {
 
         payload.lowLevelEditScript.forEach {
-            val node = it.node
             val isInsertOrDelete = it is Insert || it is Delete
-            if (isInsertOrDelete && languageInfo.isDeclarationOrStatement(node)) {
+            if (isInsertOrDelete && languageInfo.isDeclarationOrStatement(it.node) && !payload.isUsed(it)) {
                 val action = StatementsActionsGroupingTraversal(it, payload, languageInfo).groupActions()
                 payload.highLevelEditScript.add(action)
             }

@@ -6,10 +6,9 @@ interface LanguageInfo {
 
     fun isDeclarationOrStatement(node: ITree): Boolean
 
-    fun isComplexStatment(node: ITree): Boolean
+    fun isComplex(node: ITree): Boolean
 
-    fun isAtomicStatment(node: ITree): Boolean
-            = !isComplexStatment(node)
+    fun isAtomic(node: ITree): Boolean
 
     fun isBaseElement(node: ITree, of: ITree): Boolean
 
