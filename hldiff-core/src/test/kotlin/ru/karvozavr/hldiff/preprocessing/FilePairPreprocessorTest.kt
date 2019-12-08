@@ -13,6 +13,6 @@ class FilePairPreprocessorTest {
         val dst = Paths.get(javaClass.classLoader.getResource("b.java")!!.toURI()).toString()
 
         val lowLevelDiff = FilePairPreprocessor().processFilePair(src, dst)
-        assertTrue(lowLevelDiff.editScript.size() > 0)
+        assertTrue(lowLevelDiff.editScript.isNotEmpty())
     }
 }

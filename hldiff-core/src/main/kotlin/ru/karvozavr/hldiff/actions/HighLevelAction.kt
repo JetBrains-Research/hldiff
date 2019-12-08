@@ -2,6 +2,7 @@ package ru.karvozavr.hldiff.actions
 
 import com.github.gumtreediff.actions.model.*
 import com.github.gumtreediff.tree.ITree
+import ru.karvozavr.hldiff.language.JavaLanguageInfo
 
 abstract class HighLevelAction(val node: ITree) {
 
@@ -10,17 +11,14 @@ abstract class HighLevelAction(val node: ITree) {
         fun of(lowLevelAction: Action, isPartial: Boolean = false): HighLevelAction {
             val node = lowLevelAction.node
 
-            val nodeType = if (isPartial) node.type.toString() else node.type.toString() + "Part"
+            val nodeTypeString = JavaLanguageInfo.getTypeName(node)
+            val actionObjectType = if (isPartial) nodeTypeString + "Part" else nodeTypeString
 
             return when (lowLevelAction) {
-                is Delete -> DeleteAction(node, nodeType)
+                is Delete -> DeleteAction(node, actionObjectType)
                 is Update -> TODO()
-                is Move -> {
-                    InsertAction(node, nodeType, lowLevelAction.parent, lowLevelAction.position)
-                }
-                is Insert -> {
-                    InsertAction(node, nodeType, lowLevelAction.parent, lowLevelAction.position)
-                }
+                is Move -> InsertAction(node, actionObjectType, lowLevelAction.parent, lowLevelAction.position)
+                is Insert -> InsertAction(node, actionObjectType, lowLevelAction.parent, lowLevelAction.position)
                 else -> throw RuntimeException("Low-level action of unknown type - ${lowLevelAction.javaClass}.")
             }
         }

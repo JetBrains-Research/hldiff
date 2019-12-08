@@ -1,7 +1,8 @@
 package ru.karvozavr.hldiff.steps
 
-import com.github.gumtreediff.actions.EditScript
+import com.github.gumtreediff.actions.model.Action
 import com.github.gumtreediff.actions.model.Move
+import ru.karvozavr.hldiff.actions.HighLevelAction
 import ru.karvozavr.hldiff.actions.MoveAction
 import ru.karvozavr.hldiff.data.HighLevelDiff
 import ru.karvozavr.hldiff.pipeline.PipelineStep
@@ -14,12 +15,12 @@ class MoveActionExtractionStep : PipelineStep<HighLevelDiff>() {
 
     private fun extractMoveActions(diff: HighLevelDiff): HighLevelDiff {
         val actions = diff.lowLevelEditScript
-        val newActions = EditScript()
+        val newActions = mutableListOf<Action>()
         val highLevelActions = diff.highLevelEditScript
 
         for (action in actions) {
             if (action is Move) {
-                val moveAction = MoveAction(node = action.node, type = action.node.type.toString(), newParent = action.parent, position = action.position)
+                val moveAction = HighLevelAction.of(action)
                 highLevelActions.add(moveAction)
             } else {
                 newActions.add(action)

@@ -1,6 +1,5 @@
 package ru.karvozavr.hldiff.data
 
-import com.github.gumtreediff.actions.EditScript
 import com.github.gumtreediff.actions.model.Action
 import com.github.gumtreediff.matchers.MappingStore
 import com.github.gumtreediff.tree.ITree
@@ -8,7 +7,7 @@ import ru.karvozavr.hldiff.preprocessing.LowLevelDiff
 
 data class HighLevelDiff(val treeBefore: ITree,
                          val treeAfter: ITree,
-                         val lowLevelEditScript: EditScript,
+                         val lowLevelEditScript: List<Action>,
                          val highLevelEditScript: HighLevelEditScript,
                          val mappings: MappingStore) {
 

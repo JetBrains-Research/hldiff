@@ -1,5 +1,6 @@
 package ru.karvozavr.hldiff.preprocessing
 
+import org.eclipse.jdt.core.dom.ASTNode
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -16,6 +17,6 @@ class ASTGeneratorTest {
         val generator = ASTGenerator(file)
         val ast = generator.getAST()
 
-        assertEquals(ast.children[0].type.toString(), "TypeDeclaration")
+        assertEquals(ast.children[0].type, ASTNode.TYPE_DECLARATION)
     }
 }

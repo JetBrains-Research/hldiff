@@ -1,13 +1,24 @@
 package ru.karvozavr.hldiff.preprocessing
 
-import com.github.gumtreediff.actions.ChawatheScriptGenerator
-import com.github.gumtreediff.actions.EditScript
+import com.github.gumtreediff.actions.ActionGenerator
+import com.github.gumtreediff.actions.model.Action
 import com.github.gumtreediff.matchers.MappingStore
 import com.github.gumtreediff.matchers.Matchers
 import com.github.gumtreediff.tree.ITree
 
 class LowLevelDiff(val treeBefore: ITree, val treeAfter: ITree) {
 
-    val mappings: MappingStore = Matchers.getInstance().matcher.match(treeBefore, treeAfter)
-    val editScript: EditScript = ChawatheScriptGenerator().computeActions(mappings)
+    val mappings: MappingStore
+
+    val editScript: List<Action>
+
+    init {
+        val matcher = Matchers.getInstance().getMatcher(treeBefore, treeAfter)
+        matcher.match()
+        mappings = matcher.mappings
+
+        val generator = ActionGenerator(treeBefore, treeAfter, mappings)
+        generator.generate()
+        editScript = generator.actions
+    }
 }

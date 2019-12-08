@@ -41,20 +41,17 @@ class StatementsActionsGroupingTraversal(private val action: Action, private val
         if (languageInfo.isDeclarationOrStatement(node) && languageInfo.isComposingElement(node, root))
             traverseComposingElements(node)
 
-        if (context.mappings.isDstMapped(node) || context.mappings.isSrcMapped(node)) {
-            // stop the traversal on this node
-            isPartial = true
+        if (context.mappings.hasDst(node) || context.mappings.hasSrc(node)) {
+            isPartial = true // stop the traversal on this node
         } else {
             val nodeAction = getNodeAction(node) // the action adding this node
-
-            // group this action
-            baseActions.add(nodeAction)
+            baseActions.add(nodeAction) // group this action
             node.children.forEach { traverseBaseElements(it) }
         }
     }
 
     private fun traverseComposingElements(node: ITree) {
-        if (context.mappings.isDstMapped(node)) { // the node is not newly added or deleted
+        if (context.mappings.hasDst(node) || context.mappings.hasSrc(node)) {
             composingIsPartial = true
         } else {
             val nodeAction = getNodeAction(node)
