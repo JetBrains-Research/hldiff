@@ -47,7 +47,7 @@ object JavaLanguageInfo : LanguageInfo {
             ASTNode.SINGLE_VARIABLE_DECLARATION
     )
 
-    fun getTypeName(node: ITree): String {
+    override fun getTypeName(node: ITree): String {
         return ASTNode.nodeClassForType(node.type).simpleName
     }
 

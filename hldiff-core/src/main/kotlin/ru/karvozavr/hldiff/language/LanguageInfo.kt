@@ -13,4 +13,5 @@ interface LanguageInfo {
     fun isBaseElement(node: ITree, of: ITree): Boolean
 
     fun isComposingElement(node: ITree, of: ITree): Boolean
+    fun getTypeName(node: ITree): String
 }

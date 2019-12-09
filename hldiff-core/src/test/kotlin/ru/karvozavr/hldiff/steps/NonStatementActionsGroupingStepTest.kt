@@ -8,7 +8,7 @@ import ru.karvozavr.hldiff.language.JavaLanguageInfo
 import ru.karvozavr.hldiff.preprocessing.FilePairPreprocessor
 import java.nio.file.Paths
 
-class StatementActionsExtractionStepTest {
+class NonStatementActionsGroupingStepTest {
 
     val src = Paths.get(javaClass.classLoader.getResource("a.java")!!.toURI()).toString()
     val dst = Paths.get(javaClass.classLoader.getResource("b.java")!!.toURI()).toString()
@@ -18,12 +18,15 @@ class StatementActionsExtractionStepTest {
     @Test
     fun smokeTest() {
         val moveExtractionStep = MoveActionExtractionStep()
-        val statementsActionsExtractionStep = StatementActionsExtractionStep()
+        val statementsActionsGroupingStep = StatementActionsGroupingStep()
+        val nonStatementActionsGroupingStep = NonStatementActionsGroupingStep()
+
         val afterMove = moveExtractionStep.apply(hlDiff)
+        val afterSt = statementsActionsGroupingStep.apply(afterMove)
+        val afterNonSt = nonStatementActionsGroupingStep.apply(afterSt)
 
-        val result = statementsActionsExtractionStep.apply(afterMove)
-        result.highLevelEditScript.forEach { println(it) }
+        afterNonSt.highLevelEditScript.forEach { println(it) }
 
-        assertTrue(result.lowLevelEditScript.none { JavaLanguageInfo.isDeclarationOrStatement(it.node) })
+       // assertTrue(afterSt.lowLevelEditScript.none { JavaLanguageInfo.isDeclarationOrStatement(it.node) })
     }
 }
