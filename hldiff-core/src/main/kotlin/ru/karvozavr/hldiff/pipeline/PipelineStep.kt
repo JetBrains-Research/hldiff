@@ -18,5 +18,3 @@ abstract class PipelineStep<PayloadT> {
         return result
     }
 }
-
-//typealias PipelineStep<PayloadT> = (PayloadT) -> PayloadT

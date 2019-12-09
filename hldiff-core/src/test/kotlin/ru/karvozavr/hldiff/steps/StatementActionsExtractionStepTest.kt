@@ -13,15 +13,17 @@ class StatementActionsExtractionStepTest {
     val src = Paths.get(javaClass.classLoader.getResource("a.java")!!.toURI()).toString()
     val dst = Paths.get(javaClass.classLoader.getResource("b.java")!!.toURI()).toString()
     val lowLevelDiff = FilePairPreprocessor().processFilePair(src, dst)
-    val hlDiff = HighLevelDiff(lowLevelDiff)
+    val hlDiff = HighLevelDiff(lowLevelDiff, JavaLanguageInfo)
 
     @Test
     fun smokeTest() {
         val moveExtractionStep = MoveActionExtractionStep()
-        val statementsActionsExtractionStep = StatementActionsExtractionStep(JavaLanguageInfo)
+        val statementsActionsExtractionStep = StatementActionsExtractionStep()
         val afterMove = moveExtractionStep.apply(hlDiff)
 
         val result = statementsActionsExtractionStep.apply(afterMove)
         result.highLevelEditScript.forEach { println(it) }
+
+        assertTrue(result.lowLevelEditScript.none { JavaLanguageInfo.isDeclarationOrStatement(it.node) })
     }
 }

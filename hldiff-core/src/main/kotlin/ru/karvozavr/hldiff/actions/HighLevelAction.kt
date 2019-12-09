@@ -17,7 +17,7 @@ abstract class HighLevelAction(val node: ITree) {
             return when (lowLevelAction) {
                 is Delete -> DeleteAction(node, actionObjectType)
                 is Update -> TODO()
-                is Move -> InsertAction(node, actionObjectType, lowLevelAction.parent, lowLevelAction.position)
+                is Move -> MoveAction(node, actionObjectType, lowLevelAction.parent, lowLevelAction.position)
                 is Insert -> InsertAction(node, actionObjectType, lowLevelAction.parent, lowLevelAction.position)
                 else -> throw RuntimeException("Low-level action of unknown type - ${lowLevelAction.javaClass}.")
             }

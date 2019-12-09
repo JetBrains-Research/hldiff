@@ -5,27 +5,27 @@ import com.github.gumtreediff.tree.ITree
 import ru.karvozavr.hldiff.actions.HighLevelAction
 import ru.karvozavr.hldiff.data.HighLevelDiff
 import ru.karvozavr.hldiff.language.LanguageInfo
-import java.util.*
 import kotlin.collections.LinkedHashSet
 
-class StatementsActionsGroupingTraversal(private val action: Action, private val context: HighLevelDiff, private val languageInfo: LanguageInfo) {
+class StatementsActionsGroupingTraversal(private val action: Action, private val highLevelDiff: HighLevelDiff) {
 
     private val root: ITree = action.node
     private var isPartial = false
     private var composingIsPartial = false
     private val baseActions = LinkedHashSet<Action>()
     private val composingActions = LinkedHashSet<Action>()
+    private val languageInfo = highLevelDiff.languageInfo
 
     fun groupActions(): HighLevelAction {
         baseActions.add(action)
 
         root.children.forEach { traverseBaseElements(it) }
-        baseActions.forEach { context.markUsed(it) }
+        baseActions.forEach { highLevelDiff.markUsed(it) }
 
         val highLevelAction: HighLevelAction = if (isPartial or composingIsPartial) {
             HighLevelAction.of(action, true)
         } else {
-            composingActions.forEach { context.markUsed(it) }
+            composingActions.forEach { highLevelDiff.markUsed(it) }
             HighLevelAction.of(action)
         }
 
@@ -34,14 +34,14 @@ class StatementsActionsGroupingTraversal(private val action: Action, private val
 
 
     private fun getNodeAction(node: ITree): Action {
-        return context.lowLevelEditScript.find { it.node == node } ?: throw RuntimeException("Action for the node not found.")
+        return highLevelDiff.lowLevelEditScript.find { it.node == node } ?: throw RuntimeException("Action for the node not found.")
     }
 
     private fun traverseBaseElements(node: ITree) {
         if (languageInfo.isDeclarationOrStatement(node) && languageInfo.isComposingElement(node, root))
             traverseComposingElements(node)
 
-        if (context.mappings.hasDst(node) || context.mappings.hasSrc(node)) {
+        if (highLevelDiff.mappings.hasDst(node) || highLevelDiff.mappings.hasSrc(node)) {
             isPartial = true // stop the traversal on this node
         } else {
             val nodeAction = getNodeAction(node) // the action adding this node
@@ -51,7 +51,7 @@ class StatementsActionsGroupingTraversal(private val action: Action, private val
     }
 
     private fun traverseComposingElements(node: ITree) {
-        if (context.mappings.hasDst(node) || context.mappings.hasSrc(node)) {
+        if (highLevelDiff.mappings.hasDst(node) || highLevelDiff.mappings.hasSrc(node)) {
             composingIsPartial = true
         } else {
             val nodeAction = getNodeAction(node)
