@@ -23,10 +23,10 @@ class StatementsActionsGroupingTraversal(private val action: Action, private val
         baseActions.forEach { highLevelDiff.markUsed(it) }
 
         val highLevelAction: HighLevelAction = if (isPartial or composingIsPartial) {
-            HighLevelAction.of(action, true)
+            HighLevelAction.of(action, highLevelDiff.languageInfo, true)
         } else {
             composingActions.forEach { highLevelDiff.markUsed(it) }
-            HighLevelAction.of(action)
+            HighLevelAction.of(action, highLevelDiff.languageInfo)
         }
 
         return highLevelAction

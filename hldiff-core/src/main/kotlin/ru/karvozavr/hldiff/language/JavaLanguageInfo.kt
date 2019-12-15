@@ -1,9 +1,10 @@
 package ru.karvozavr.hldiff.language
 
 import com.github.gumtreediff.tree.ITree
+import com.github.gumtreediff.tree.TreeContext
 import org.eclipse.jdt.core.dom.ASTNode
 
-object JavaLanguageInfo : LanguageInfo {
+class JavaLanguageInfo(context: TreeContext) : LanguageInfo(context) {
 
     private val atomicStatements: Set<Int> = setOf(
             ASTNode.VARIABLE_DECLARATION_STATEMENT,
@@ -46,10 +47,6 @@ object JavaLanguageInfo : LanguageInfo {
             ASTNode.VARIABLE_DECLARATION_FRAGMENT,
             ASTNode.SINGLE_VARIABLE_DECLARATION
     )
-
-    override fun getTypeName(node: ITree): String {
-        return ASTNode.nodeClassForType(node.type).simpleName
-    }
 
     override fun isDeclarationOrStatement(node: ITree): Boolean {
         val type = node.type

@@ -13,9 +13,5 @@ class ASTGenerator(file: String) {
         }
     }
 
-    private val treeContext: TreeContext = Generators.getInstance().getTree(file)
-
-    fun getAST(): ITree {
-        return treeContext.root
-    }
+    val treeContext: TreeContext = Generators.getInstance().getTree(file)
 }

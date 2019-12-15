@@ -15,8 +15,19 @@ class ASTGeneratorTest {
     fun smokeTest() {
         val file = Paths.get(javaClass.classLoader.getResource("a.java")!!.toURI()).toString()
         val generator = ASTGenerator(file)
-        val ast = generator.getAST()
+        val ast = generator.treeContext.root
 
         assertEquals(ast.children[0].type, ASTNode.TYPE_DECLARATION)
+    }
+
+    @Test
+    fun testPython() {
+        val file = Paths.get(javaClass.classLoader.getResource("a.py")!!.toURI()).toString()
+        val generator = ASTGenerator(file)
+        val ast = generator.treeContext.root
+
+        ast.preOrder().forEach {
+            println(generator.treeContext.getTypeLabel(it))
+        }
     }
 }

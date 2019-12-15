@@ -19,7 +19,7 @@ class MoveActionExtractionStep : PipelineStep<HighLevelDiff>() {
 
         for (action in actions) {
             if (action is Move) {
-                val moveAction = HighLevelAction.of(action)
+                val moveAction = HighLevelAction.of(action, diff.languageInfo)
                 highLevelActions.add(moveAction)
             } else {
                 newActions.add(action)

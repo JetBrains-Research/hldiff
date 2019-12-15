@@ -13,7 +13,7 @@ class StatementActionsGroupingStepTest {
     val src = Paths.get(javaClass.classLoader.getResource("a.java")!!.toURI()).toString()
     val dst = Paths.get(javaClass.classLoader.getResource("b.java")!!.toURI()).toString()
     val lowLevelDiff = FilePairPreprocessor().processFilePair(src, dst)
-    val hlDiff = HighLevelDiff(lowLevelDiff, JavaLanguageInfo)
+    val hlDiff = HighLevelDiff(lowLevelDiff)
 
     @Test
     fun smokeTest() {
@@ -24,6 +24,6 @@ class StatementActionsGroupingStepTest {
         val result = statementsActionsExtractionStep.apply(afterMove)
         result.highLevelEditScript.forEach { println(it) }
 
-        assertTrue(result.lowLevelEditScript.none { JavaLanguageInfo.isDeclarationOrStatement(it.node) })
+        assertTrue(result.lowLevelEditScript.none { hlDiff.languageInfo.isDeclarationOrStatement(it.node) })
     }
 }

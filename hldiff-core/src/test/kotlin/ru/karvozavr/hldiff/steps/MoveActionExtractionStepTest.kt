@@ -18,7 +18,7 @@ class MoveActionExtractionStepTest {
         val lowLevelDiff = FilePairPreprocessor().processFilePair(src, dst)
 
         val step = MoveActionExtractionStep()
-        val hlDiff = HighLevelDiff(lowLevelDiff, JavaLanguageInfo)
+        val hlDiff = HighLevelDiff(lowLevelDiff)
         val resultDiff = step.apply(hlDiff)
 
         assertTrue(resultDiff.highLevelEditScript[0] is MoveAction)

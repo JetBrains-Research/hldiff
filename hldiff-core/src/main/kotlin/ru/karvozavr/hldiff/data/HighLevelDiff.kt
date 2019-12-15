@@ -13,8 +13,8 @@ data class HighLevelDiff(val treeBefore: ITree,
                          val mappings: MappingStore,
                          val languageInfo: LanguageInfo) {
 
-    constructor(diff: LowLevelDiff, languageInfo: LanguageInfo)
-            : this(diff.treeBefore, diff.treeAfter, diff.editScript, HighLevelEditScript(), diff.mappings, languageInfo)
+    constructor(diff: LowLevelDiff)
+            : this(diff.treeBefore, diff.treeAfter, diff.editScript, HighLevelEditScript(), diff.mappings, diff.languageInfo)
 
     private val usedActions = HashSet<Action>()
 

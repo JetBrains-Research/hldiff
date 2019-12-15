@@ -5,8 +5,9 @@ import com.github.gumtreediff.actions.model.Action
 import com.github.gumtreediff.matchers.MappingStore
 import com.github.gumtreediff.matchers.Matchers
 import com.github.gumtreediff.tree.ITree
+import ru.karvozavr.hldiff.language.LanguageInfo
 
-class LowLevelDiff(val treeBefore: ITree, val treeAfter: ITree) {
+class LowLevelDiff(val treeBefore: ITree, val treeAfter: ITree, val languageInfo: LanguageInfo) {
 
     val mappings: MappingStore
 

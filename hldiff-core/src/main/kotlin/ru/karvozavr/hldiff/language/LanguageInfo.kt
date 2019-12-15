@@ -1,17 +1,21 @@
 package ru.karvozavr.hldiff.language
 
 import com.github.gumtreediff.tree.ITree
+import com.github.gumtreediff.tree.TreeContext
 
-interface LanguageInfo {
+abstract class LanguageInfo(private val context: TreeContext) {
 
-    fun isDeclarationOrStatement(node: ITree): Boolean
+    abstract fun isDeclarationOrStatement(node: ITree): Boolean
 
-    fun isComplex(node: ITree): Boolean
+    abstract fun isComplex(node: ITree): Boolean
 
-    fun isAtomic(node: ITree): Boolean
+    abstract fun isAtomic(node: ITree): Boolean
 
-    fun isBaseElement(node: ITree, of: ITree): Boolean
+    abstract fun isBaseElement(node: ITree, of: ITree): Boolean
 
-    fun isComposingElement(node: ITree, of: ITree): Boolean
-    fun getTypeName(node: ITree): String
+    abstract fun isComposingElement(node: ITree, of: ITree): Boolean
+
+    fun getTypeName(node: ITree): String {
+        return context.getTypeLabel(node)
+    }
 }
