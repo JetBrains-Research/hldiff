@@ -1,2 +1,3 @@
 rootProject.name = 'hldiff'
 include 'hldiff-core'
+include 'python-gen'

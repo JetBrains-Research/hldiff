@@ -1,10 +1,10 @@
 package ru.karvozavr.hldiff.preprocessing
 
 import org.eclipse.jdt.core.dom.ASTNode
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 import java.nio.file.Paths
+
 
 class ASTGeneratorTest {
 
@@ -17,17 +17,20 @@ class ASTGeneratorTest {
         val generator = ASTGenerator(file)
         val ast = generator.treeContext.root
 
-        assertEquals(ast.children[0].type, ASTNode.TYPE_DECLARATION)
+        assertEquals(ASTNode.TYPE_DECLARATION, ast.children[0].type)
     }
 
     @Test
     fun testPython() {
-        val file = Paths.get(javaClass.classLoader.getResource("a.py")!!.toURI()).toString()
+        val file = Paths.get(javaClass.classLoader.getResource("b.py")!!.toURI()).toString()
         val generator = ASTGenerator(file)
         val ast = generator.treeContext.root
 
         ast.preOrder().forEach {
-            println(generator.treeContext.getTypeLabel(it))
+            repeat(it.depth) { print("\t|") }
+            println("${generator.treeContext.getTypeLabel(it)} : ${it.id}")
         }
+
+        assertEquals("FunctionDef", generator.treeContext.getTypeLabel(ast.getChild(0)))
     }
 }
