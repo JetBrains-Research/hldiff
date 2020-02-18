@@ -16,6 +16,7 @@ dependencies {
     testCompile("junit", "junit", "4.12")
     compile(fileTree("include" to listOf("*.jar"), "dir" to "libs"))
     compile(project(":python-gen"))
+    compile("com.xenomachina:kotlin-argparser:2.0.7")
 }
 
 configure<JavaPluginConvention> {
