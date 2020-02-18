@@ -15,6 +15,8 @@ abstract class LanguageInfo(private val context: TreeContext) {
 
     abstract fun isComposingElement(node: ITree, of: ITree): Boolean
 
+    abstract fun isBlock(node: ITree): Boolean
+
     fun getTypeName(node: ITree): String {
         return context.getTypeLabel(node)
     }
