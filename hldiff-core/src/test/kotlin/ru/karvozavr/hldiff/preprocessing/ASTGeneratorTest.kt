@@ -28,7 +28,7 @@ class ASTGeneratorTest {
 
         ast.preOrder().forEach {
             repeat(it.depth) { print("\t|") }
-            println("${generator.treeContext.getTypeLabel(it)} : ${it.id}")
+            println("${generator.treeContext.getTypeLabel(it)} : ${it.label}")
         }
 
         assertEquals("FunctionDef", generator.treeContext.getTypeLabel(ast.getChild(0)))
