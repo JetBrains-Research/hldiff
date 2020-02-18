@@ -34,5 +34,5 @@ tasks {
 
 application {
     applicationName = "hldiff"
-    mainClassName = "ru.karvozavr.hldiff.MainKt"
+    mainClassName = "ru.karvozavr.hldiff.app.MainKt"
 }
