@@ -61,6 +61,10 @@ class JavaLanguageInfo(context: TreeContext) : LanguageInfo(context) {
         return type in complexDeclarations || type in complexStatements
     }
 
+    override fun isBlock(node: ITree): Boolean {
+        return node.type == ASTNode.BLOCK
+    }
+
     override fun isAtomic(node: ITree): Boolean {
         val type = node.type
         return type in atomicDeclarations || type in atomicStatements
@@ -72,11 +76,9 @@ class JavaLanguageInfo(context: TreeContext) : LanguageInfo(context) {
 
     override fun isComposingElement(node: ITree, of: ITree): Boolean {
         if (isAtomic(of)) return false
-        val type = node.type
-        val blockType = ASTNode.BLOCK
 
-        val isNonBlockChild = node.parent == of && type != blockType && isDeclarationOrStatement(node)
-        val isComposingBlock = node.parent.parent == of && type == blockType
+        val isNonBlockChild = node.parent == of && !isBlock(node) && isDeclarationOrStatement(node)
+        val isComposingBlock = node.parent.parent == of && isBlock(node)
 
         return isNonBlockChild || isComposingBlock
     }
