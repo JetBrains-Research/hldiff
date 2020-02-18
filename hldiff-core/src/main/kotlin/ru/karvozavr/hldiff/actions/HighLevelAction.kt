@@ -2,7 +2,6 @@ package ru.karvozavr.hldiff.actions
 
 import com.github.gumtreediff.actions.model.*
 import com.github.gumtreediff.tree.ITree
-import ru.karvozavr.hldiff.language.JavaLanguageInfo
 import ru.karvozavr.hldiff.language.LanguageInfo
 
 abstract class HighLevelAction(val node: ITree) {
