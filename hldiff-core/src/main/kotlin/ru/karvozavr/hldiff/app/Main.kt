@@ -13,6 +13,4 @@ fun main(args: Array<String>) {
     } catch (e: SystemExitException) {
         e.printAndExit()
     }
-
-
 }

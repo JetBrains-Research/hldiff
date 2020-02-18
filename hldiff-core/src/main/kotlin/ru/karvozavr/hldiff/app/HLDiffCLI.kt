@@ -1,18 +1,20 @@
 package ru.karvozavr.hldiff.app
 
+import ru.karvozavr.hldiff.actions.HighLevelAction
 import ru.karvozavr.hldiff.data.HighLevelDiff
 import ru.karvozavr.hldiff.pipeline.Pipeline
 import ru.karvozavr.hldiff.preprocessing.FilePairPreprocessor
 import ru.karvozavr.hldiff.steps.MoveActionExtractionStep
 import ru.karvozavr.hldiff.steps.NonStatementActionsGroupingStep
 import ru.karvozavr.hldiff.steps.StatementActionsGroupingStep
+import java.io.File
 import java.nio.file.Paths
 
 class HLDiffCLI(private val args: HLDiffArgs) {
 
     fun runHLDiffForFilePair() {
-        val src = Paths.get(args.source).toString()
-        val dst = Paths.get(args.destination).toString()
+        val src = Paths.get(args.source).toAbsolutePath().toString()
+        val dst = Paths.get(args.destination).toAbsolutePath().toString()
         val lowLevelDiff = FilePairPreprocessor().processFilePair(src, dst)
         val highLevelDiff = HighLevelDiff(lowLevelDiff)
 
@@ -20,7 +22,7 @@ class HLDiffCLI(private val args: HLDiffArgs) {
 
         val result: HighLevelDiff = pipeline.apply(highLevelDiff)
 
-        printHighLevelEditScript(result)
+        printHighLevelEditScript(result, File(src).readText(), File(dst).readText())
     }
 
     private fun buildPipeline(): Pipeline<HighLevelDiff> {
@@ -34,9 +36,9 @@ class HLDiffCLI(private val args: HLDiffArgs) {
                 .pipe(nonStatementActionsGroupingStep)
     }
 
-    private fun printHighLevelEditScript(result: HighLevelDiff) {
+    private fun printHighLevelEditScript(result: HighLevelDiff, before: String, after: String) {
         result.highLevelEditScript.forEach {
-            println(it)
+            println(HighLevelAction.prettyPrint(it, before, after))
         }
     }
 }
