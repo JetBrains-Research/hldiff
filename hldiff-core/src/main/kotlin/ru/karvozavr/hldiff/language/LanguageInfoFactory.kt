@@ -8,8 +8,12 @@ object LanguageInfoFactory {
     fun fromFilename(filename: String, treeContext: TreeContext): LanguageInfo {
         if (filename.endsWith(".java")) {
             return JavaLanguageInfo(treeContext)
-        } else {
-            throw RuntimeException("No language info found for the file: \"$filename\".")
         }
+
+        if (filename.endsWith(".py")) {
+            return JavaLanguageInfo(treeContext)
+        }
+
+        throw RuntimeException("No language info found for the file: \"$filename\".")
     }
 }
