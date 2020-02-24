@@ -24,14 +24,7 @@ abstract class HighLevelAction(val node: ITree) {
             }
         }
 
-        fun prettyPrint(action: HighLevelAction, before: String, after: String): String {
-            return when (action) {
-                is InsertAction -> action.toString()
-                is DeleteAction -> action.toString()
-                is UpdateAction -> before.substring(action.node.pos, action.node.pos + 15) + "...    " + action.toString()
-                is MoveAction -> action.toString()
-                else -> throw RuntimeException("Unknown high-level action type")
-            }
-        }
     }
+
+    abstract fun format(context: TreeContext, before: String, after: String): String
 }
