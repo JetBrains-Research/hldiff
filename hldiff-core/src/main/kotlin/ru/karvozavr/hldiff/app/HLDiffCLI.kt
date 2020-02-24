@@ -1,6 +1,6 @@
 package ru.karvozavr.hldiff.app
 
-import ru.karvozavr.hldiff.actions.HighLevelAction
+import com.github.gumtreediff.tree.TreeContext
 import ru.karvozavr.hldiff.data.HighLevelDiff
 import ru.karvozavr.hldiff.pipeline.Pipeline
 import ru.karvozavr.hldiff.preprocessing.FilePairPreprocessor
@@ -22,7 +22,7 @@ class HLDiffCLI(private val args: HLDiffArgs) {
 
         val result: HighLevelDiff = pipeline.apply(highLevelDiff)
 
-        printHighLevelEditScript(result, File(src).readText(), File(dst).readText())
+        printHighLevelEditScript(result, File(src).readText(), File(dst).readText(), result.languageInfo.context)
     }
 
     private fun buildPipeline(): Pipeline<HighLevelDiff> {
@@ -36,9 +36,9 @@ class HLDiffCLI(private val args: HLDiffArgs) {
                 .pipe(nonStatementActionsGroupingStep)
     }
 
-    private fun printHighLevelEditScript(result: HighLevelDiff, before: String, after: String) {
+    private fun printHighLevelEditScript(result: HighLevelDiff, before: String, after: String, treeContext: TreeContext) {
         result.highLevelEditScript.forEach {
-            println(HighLevelAction.prettyPrint(it, before, after))
+            println(it.format(treeContext, before, after))
         }
     }
 }
