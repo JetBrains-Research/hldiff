@@ -3,7 +3,7 @@ package ru.karvozavr.hldiff.language
 import com.github.gumtreediff.tree.ITree
 import com.github.gumtreediff.tree.TreeContext
 
-abstract class LanguageInfo(private val context: TreeContext) {
+abstract class LanguageInfo(val context: TreeContext) {
 
     abstract fun isDeclarationOrStatement(node: ITree): Boolean
 

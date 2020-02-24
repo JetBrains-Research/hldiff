@@ -15,7 +15,9 @@ class JavaLanguageInfo(context: TreeContext) : LanguageInfo(context) {
             ASTNode.THROW_STATEMENT,
             ASTNode.CONSTRUCTOR_INVOCATION,
             ASTNode.SUPER_CONSTRUCTOR_INVOCATION,
-            ASTNode.LABELED_STATEMENT
+            ASTNode.LABELED_STATEMENT,
+            ASTNode.IMPORT_DECLARATION,
+            ASTNode.MARKER_ANNOTATION
     )
 
     private val complexStatements: Set<Int> = setOf(
