@@ -4,7 +4,6 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import ru.karvozavr.hldiff.data.HighLevelDiff
-import ru.karvozavr.hldiff.language.JavaLanguageInfo
 import ru.karvozavr.hldiff.preprocessing.FilePairPreprocessor
 import java.nio.file.Paths
 
