@@ -17,6 +17,7 @@ dependencies {
     compile(fileTree("include" to listOf("*.jar"), "dir" to "libs"))
     compile(project(":python-gen"))
     compile("com.xenomachina:kotlin-argparser:2.0.7")
+    implementation( "com.google.code.gson:gson:2.8.6")
 }
 
 configure<JavaPluginConvention> {

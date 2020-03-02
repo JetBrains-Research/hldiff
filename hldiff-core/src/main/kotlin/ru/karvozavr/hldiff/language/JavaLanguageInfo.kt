@@ -1,10 +1,9 @@
 package ru.karvozavr.hldiff.language
 
 import com.github.gumtreediff.tree.ITree
-import com.github.gumtreediff.tree.TreeContext
 import org.eclipse.jdt.core.dom.ASTNode
 
-class JavaLanguageInfo(context: TreeContext) : LanguageInfo(context) {
+class JavaLanguageInfo : LanguageInfo() {
 
     private val atomicStatements: Set<Int> = setOf(
             ASTNode.VARIABLE_DECLARATION_STATEMENT,
@@ -65,6 +64,10 @@ class JavaLanguageInfo(context: TreeContext) : LanguageInfo(context) {
 
     override fun isBlock(node: ITree): Boolean {
         return node.type == ASTNode.BLOCK
+    }
+
+    override fun getTypeName(node: ITree): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun isAtomic(node: ITree): Boolean {

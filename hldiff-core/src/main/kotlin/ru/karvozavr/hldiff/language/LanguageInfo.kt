@@ -1,9 +1,8 @@
 package ru.karvozavr.hldiff.language
 
 import com.github.gumtreediff.tree.ITree
-import com.github.gumtreediff.tree.TreeContext
 
-abstract class LanguageInfo(val context: TreeContext) {
+abstract class LanguageInfo {
 
     abstract fun isDeclarationOrStatement(node: ITree): Boolean
 
@@ -17,7 +16,5 @@ abstract class LanguageInfo(val context: TreeContext) {
 
     abstract fun isBlock(node: ITree): Boolean
 
-    fun getTypeName(node: ITree): String {
-        return context.getTypeLabel(node)
-    }
+    abstract fun getTypeName(node: ITree): String
 }
