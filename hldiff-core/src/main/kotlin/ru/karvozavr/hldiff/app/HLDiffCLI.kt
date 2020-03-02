@@ -22,7 +22,7 @@ class HLDiffCLI(private val args: HLDiffArgs) {
 
         val result: HighLevelDiff = pipeline.apply(highLevelDiff)
 
-        printHighLevelEditScript(result, File(src).readText(), File(dst).readText(), result.languageInfo.context)
+        printHighLevelEditScript(result, File(src).readText(), File(dst).readText(), lowLevelDiff.treeContext)
     }
 
     private fun buildPipeline(): Pipeline<HighLevelDiff> {
