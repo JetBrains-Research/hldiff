@@ -10,33 +10,42 @@ import com.github.gumtreediff.tree.TreeContext;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.events.*;
-import java.io.*;
-import java.util.*;
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.events.XMLEvent;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.ArrayDeque;
 
 @Register(id = "python-pythonparser", accept = {"\\.py$"}, priority = Registry.Priority.MAXIMUM)
 public class PythonTreeGenerator extends ExternalProcessTreeGenerator {
 
-    private static final String PYTHONPARSER_CMD = System.getProperty("gt.pp.path", "pythonparser");
+    private static final String PYTHONPARSER_CMD = "/home/karvozavr/Dropbox/studies/diploma/hldiff/python-gen/src/main/resources/pythonparser3.py";
 
-    private static final QName LABEL = new QName("label");
+    private static final QName VALUE = new QName("value");
 
-    private static final QName POS = new QName("pos");
+    private static final QName LINENO = new QName("lineno");
 
-    private static final QName LENGTH = new QName("length");
+    private static final QName COL = new QName("col");
 
-    private static final QName TYPE = new QName("type");
+    private static final QName END_LINENO = new QName("end_line_no");
+
+    private static final QName END_COL = new QName("end_col");
+
+    private LineReader lr;
+
+    private TreeContext context;
 
     @Override
     public TreeContext generate(Reader r) throws IOException {
-        LineReader lr = new LineReader(r);
+        lr = new LineReader(r);
         String output = readStandardOutput(lr);
         return getTreeContext(output);
     }
 
     public TreeContext getTreeContext(String xml) {
         XMLInputFactory fact = XMLInputFactory.newInstance();
-        TreeContext context = new TreeContext();
+        context = new TreeContext();
         try {
             ArrayDeque<ITree> trees = new ArrayDeque<>();
             XMLEventReader r = fact.createXMLEventReader(new StringReader(xml));
@@ -44,24 +53,20 @@ public class PythonTreeGenerator extends ExternalProcessTreeGenerator {
                 XMLEvent ev = r.nextEvent();
                 if (ev.isStartElement()) {
                     StartElement s = ev.asStartElement();
-                    if (s.getName().getLocalPart().equals("tree")) {
-                        String typeLabel = s.getAttributeByName(TYPE).getValue();
-                        String label = "";
-                        if (s.getAttributeByName(LABEL) != null)
-                            label = s.getAttributeByName(LABEL).getValue();
-                        int type = typeLabel.hashCode();
-                        ITree t = context.createTree(type, label, typeLabel);
-                        if (trees.isEmpty()) {
-                            context.setRoot(t);
-                        } else {
-                            t.setParentAndUpdateChildren(trees.peekFirst());
-                        }
-                        setPos(t, s);
-                        trees.addFirst(t);
+                    String typeLabel = s.getName().getLocalPart();
+                    String label = "";
+                    if (s.getAttributeByName(VALUE) != null)
+                        label = s.getAttributeByName(VALUE).getValue();
+                    int type = typeLabel.hashCode();
+                    ITree t = context.createTree(type, label, typeLabel);
+                    if (trees.isEmpty()) {
+                        context.setRoot(t);
                     } else {
-                        continue;
+                        t.setParentAndUpdateChildren(trees.peekFirst());
                     }
-                } else if (ev.isEndElement() && ev.asEndElement().getName().getLocalPart().equals("tree"))
+                    setPos(t, s);
+                    trees.addFirst(t);
+                } else if (ev.isEndElement())
                     trees.removeFirst();
             }
             context.validate();
@@ -73,10 +78,20 @@ public class PythonTreeGenerator extends ExternalProcessTreeGenerator {
     }
 
     private void setPos(ITree t, StartElement e) {
-        int pos = Integer.parseInt(e.getAttributeByName(POS).getValue());
-        int length = Integer.parseInt(e.getAttributeByName(LENGTH).getValue());
-        t.setPos(pos);
-        t.setLength(length);
+        if (e.getAttributeByName(LINENO) == null) { //FIXME some nodes have start position
+            System.out.println(t.getLabel());
+            return;
+        }
+        int line = Integer.parseInt(e.getAttributeByName(LINENO).getValue());
+        int column = Integer.parseInt(e.getAttributeByName(COL).getValue());
+        t.setPos(lr.positionFor(line, column) + 2);
+        if (e.getAttributeByName(END_LINENO) == null) { //FIXME some nodes have no end position
+            System.out.println(t.getLabel());
+            return;
+        }
+        int endLine = Integer.parseInt(e.getAttributeByName(END_LINENO).getValue());
+        int endColumn = Integer.parseInt(e.getAttributeByName(END_COL).getValue());
+        t.setLength(lr.positionFor(endLine, endColumn) - lr.positionFor(line, column));
     }
 
     public String[] getCommandLine(String file) {

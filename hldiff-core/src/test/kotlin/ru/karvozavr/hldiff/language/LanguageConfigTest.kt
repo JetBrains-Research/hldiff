@@ -63,6 +63,8 @@ class LanguageConfigTest {
         val nested = complexDeclarations + complexStatements
         nested.forEach { m[it] = "nested" }
 
-        m.entries.sortedBy { it.key }.forEach { print("{\"id\": ${it.key}, \"type\": \"${it.value}\", \"name\": \"${ASTNode.nodeClassForType(it.key).simpleName}\"},\n") }
+        m.entries
+                .sortedBy { it.key }
+                .forEach { print("{\"id\": ${it.key}, \"type\": \"${it.value}\", \"name\": \"${ASTNode.nodeClassForType(it.key).simpleName}\"},\n") }
     }
 }
