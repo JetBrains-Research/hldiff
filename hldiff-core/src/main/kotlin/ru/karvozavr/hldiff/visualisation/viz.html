@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HLDiff</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<h1>Diff of 2 files</h1>
+
+<div class="wrapper">
+    <figure class="code">
+        <figcaption>Before:</figcaption>
+        <pre>
+    <code>
+class Foo {
+
+    public int taskDecorator(int a, int b) {
+        return 0;
+    }
+
+    public void execute(int a) {
+
+    }
+
+    public void decoratedTaskMap(int a, int b, int c) {
+
+    }
+
+    int decorate = 0;
+    int command = 0;
+    int put = 0;
+
+    public void foo() {
+        execute(<span class="changed-code moved code-change-0">taskDecorator(decorate, command)</span>);
+    }
+}
+    </code>
+  </pre>
+    </figure>
+
+<div class="diff">
+    <div class="change change-move" id="code-change-0">Move Method Invocation</div>
+    <div class="change change-addition" id="code-change-1">Add Assignment (Partial)</div>
+    <div class="change change-addition" id="code-change-2">Add If Statement</div>
+    <div class="change change-update" id="code-change-3">Update ExpressionStatement</div>
+</div>
+
+<figure class="code">
+    <figcaption>After:</figcaption>
+    <pre>
+    <code>
+class Foo {
+
+    public int taskDecorator(int a, int b) { // this is insanely long striiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiingggggggggggggggggggggggggggggggggggggggg ggggggg
+        return 0;
+    }
+
+    public void execute(int a) {
+
+    }
+
+    public void decoratedTaskMap(int a, int b, int c) {
+
+    }
+
+    int decorate = 0;
+    int command = 0;
+    int put = 0;
+
+
+    public void foo() {
+        <span class="changed-code added code-change-1">int decorated = <span class="changed-code moved code-change-0">taskDecorator(decorate, command)</span>;</span>
+
+        <span class="changed-code added code-change-2">if (decorated != command) {
+            decoratedTaskMap(put, decorated, command);
+        }</span>
+
+        <span class="changed-code updated code-change-3">execute(decorated);</span>
+    }
+}
+    </code>
+  </pre>
+</figure>
+
+
+</div>
+
+<script type="text/javascript" src="visualisation.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+:root {
+    --add-color: lawngreen;
+    --move-color: cornflowerblue;
+    --update-color: sandybrown;
+    --delete-color: red;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+}
+
+.code {
+    border: 1px solid black;
+}
+
+code {
+    display: block;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.added {
+    background-color: var(--add-color);
+}
+
+.removed {
+    background-color: red;
+}
+
+.moved {
+    background-color: var(--move-color);
+}
+
+.updated {
+    background-color: var(--update-color);
+}
+
+.change {
+    padding: 10pt;
+    margin-bottom: 10pt;
+    display: block;
+}
+
+.change-addition {
+    border: 2px solid var(--add-color);
+    background-color: #7CFC0033;
+}
+
+.change-move {
+    border: 2px solid var(--move-color);
+    background-color: #6495ED33;
+}
+
+.change-update {
+    border: 2px solid var(--update-color);
+    background-color: #F4A46033;
+}
+
+.change-delete {
+    border: 2px solid var(--delete-color);
+    background-color: #FF000033;
+}
+
+#svg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#line{
+    stroke-width:2px;
+    stroke:rgb(0,0,0);
+}
