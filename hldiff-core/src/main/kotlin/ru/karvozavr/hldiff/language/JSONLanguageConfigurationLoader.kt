@@ -17,7 +17,7 @@ object JSONLanguageConfigurationLoader : LanguageConfigurationLoader {
     private val configurations = mutableListOf<LanguageConfiguration>()
 
     init {
-        val path = Paths.get("src", "main", "resources", "language").toAbsolutePath()
+        val path = Paths.get("src", "main", "resources", "language")
         Files.list(path).forEach {
             if (it.fileName.toString().endsWith(".json")) {
                 val json = it.toFile().readText()
