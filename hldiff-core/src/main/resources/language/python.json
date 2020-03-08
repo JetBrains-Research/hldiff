@@ -1,0 +1,19 @@
+{
+  "language": "Python",
+  "extensions": [".py"],
+  "statements" : [
+    {"id": -2035517098, "type": "atomic", "name": "arguments"},
+    {"id": -1984916852, "type": "nested", "name": "Module"},
+    {"id": -1850529456, "type": "atomic", "name": "Return"},
+    {"id": -1650123230, "type": "atomic", "name": "decorator_list"},
+    {"id": -278621971, "type": "nested", "name": "FunctionDef"},
+    {"id": 2365, "type": "nested", "name": "If"},
+    {"id": 96854, "type": "atomic", "name": "arg"},
+    {"id": 2092670, "type": "atomic", "name": "Call"},
+    {"id": 2174485, "type": "atomic", "name": "Expr"},
+    {"id": 3029410, "type": "nested", "name": "body"},
+    {"id": 75455167, "type": "atomic", "name": "NotEq"},
+    {"id": 1970629903, "type": "atomic", "name": "Assign"}
+  ],
+  "blockStatements" : [3029410]
+}
