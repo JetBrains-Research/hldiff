@@ -1,8 +1,9 @@
 :root {
-    --add-color: lawngreen;
-    --move-color: cornflowerblue;
-    --update-color: sandybrown;
-    --delete-color: red;
+    --add-color: rgba(124, 252, 0, 0.5);
+    --move-color: rgba(100, 149, 237, 0.5);
+    --update-color: rgba(244, 164, 96, 0.5);
+    --delete-color: rgba(255, 0, 0, 0.5);
+    --line-color: rgb(0, 0, 0);
 }
 
 .wrapper {
@@ -47,9 +48,17 @@ code {
     background-color: #7CFC0033;
 }
 
+.change-addition:hover {
+    background-color: #7CFC00AA;
+}
+
 .change-move {
     border: 2px solid var(--move-color);
     background-color: #6495ED33;
+}
+
+.change-move:hover {
+    background-color: #6495EDAA;
 }
 
 .change-update {
@@ -57,12 +66,20 @@ code {
     background-color: #F4A46033;
 }
 
+.change-update:hover {
+    background-color: #F4A460AA;
+}
+
 .change-delete {
     border: 2px solid var(--delete-color);
     background-color: #FF000033;
 }
 
-#svg{
+.change-delete:hover {
+    background-color: #FF0000AA;
+}
+
+#svg {
     position: absolute;
     top: 0;
     left: 0;
@@ -70,7 +87,15 @@ code {
     height: 100%;
 }
 
-#line{
-    stroke-width:2px;
-    stroke:rgb(0,0,0);
+#line {
+    stroke-width: 2px;
+    stroke: var(--line-color);
+}
+
+svg {
+    pointer-events: none;
+}
+
+svg * {
+    pointer-events: all;
 }
