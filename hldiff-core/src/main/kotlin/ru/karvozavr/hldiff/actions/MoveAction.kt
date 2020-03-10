@@ -9,6 +9,10 @@ class MoveAction(node: ITree, val type: String, val newParent: String, val posit
         return toString()
     }
 
+    override fun getActionType(): String {
+        return "move"
+    }
+
     override fun toString(): String {
         return "Move $type to $newParent at position $position"
     }

@@ -27,4 +27,6 @@ abstract class HighLevelAction(val node: ITree) {
     }
 
     abstract fun format(context: TreeContext, before: String, after: String): String
+
+    abstract fun getActionType(): String
 }

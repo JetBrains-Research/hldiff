@@ -9,6 +9,10 @@ class DeleteAction(node: ITree, val type: String) : HighLevelAction(node) {
         return toString()
     }
 
+    override fun getActionType(): String {
+        return "delete"
+    }
+
     override fun toString(): String {
         return "Remove $type"
     }
