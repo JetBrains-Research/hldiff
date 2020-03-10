@@ -10,7 +10,7 @@ function drawLine(start, end, line, color = 'rgb(0, 0, 0)') {
         x2 += end.clientWidth;
     }
 
-    document.documentElement.style.setProperty('--line-color', color);
+    document.documentElement.style.setProperty('--line-color', setAlpha(color, 1));
     line.setAttribute('x1', x1);
     line.setAttribute('y1', y1);
     line.setAttribute('x2', x2);
