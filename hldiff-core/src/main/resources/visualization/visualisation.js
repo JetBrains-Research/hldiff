@@ -41,7 +41,7 @@ function setAlpha(rgba, alpha) {
     }
 }
 
-function setChangesListListeners(changesList, line) {
+function setChangesListListeners(changesList, line, line2) {
     for (let elem of changesList) {
         let codeChanges = document.getElementsByClassName(elem.id);
 
@@ -52,18 +52,28 @@ function setChangesListListeners(changesList, line) {
             }
 
             if (elem.className.includes('change-addition')) {
-                drawLine(codeChanges[0], elem, line, 'var(--add-color)')
+                drawLine(codeChanges[0], elem, line, 'var(--add-color)');
             } else if (elem.className.includes('change-move')) {
-                drawLine(codeChanges[0], elem, line, 'var(--move-color)')
+                drawLine(codeChanges[0], elem, line, 'var(--move-color)');
+                drawLine(codeChanges[1], elem, line2, 'var(--move-color)');
             } else if (elem.className.includes('change-delete')) {
-                drawLine(codeChanges[0], elem, line, 'var(--delete-color)')
+                drawLine(codeChanges[0], elem, line, 'var(--delete-color)');
             } else if (elem.className.includes('change-update')) {
-                drawLine(codeChanges[0], elem, line, 'var(--update-color)')
+                drawLine(codeChanges[0], elem, line, 'var(--update-color)');
+                drawLine(codeChanges[1], elem, line2, 'var(--update-color)');
             }
         });
 
         elem.addEventListener('mouseout', function () {
             for (let change of codeChanges) {
+                line.setAttribute('x1', 0);
+                line.setAttribute('y1', 0);
+                line.setAttribute('x2', 0);
+                line.setAttribute('y2', 0);
+                line2.setAttribute('x1', 0);
+                line2.setAttribute('y1', 0);
+                line2.setAttribute('x2', 0);
+                line2.setAttribute('y2', 0);
                 console.log("Exit", change.style.backgroundColor);
                 change.style.backgroundColor = setAlpha(document.defaultView.getComputedStyle(change, null)['background-color'], 0.3);
             }
@@ -77,7 +87,7 @@ const changesList = document.getElementsByClassName('change');
 console.log(changedCode.length);
 
 const line = document.getElementById('line');
-
+const line2 = document.getElementById('line2');
 
 setChangedCodeListeners(changedCode, line);
-setChangesListListeners(changesList, line);
+setChangesListListeners(changesList, line, line2);

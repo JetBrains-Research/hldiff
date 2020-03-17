@@ -79,7 +79,7 @@ code {
     background-color: #FF0000AA;
 }
 
-#svg {
+.svg {
     position: absolute;
     top: 0;
     left: 0;
@@ -87,7 +87,7 @@ code {
     height: 100%;
 }
 
-#line {
+.line {
     stroke-width: 3px;
     stroke: var(--line-color);
 }
