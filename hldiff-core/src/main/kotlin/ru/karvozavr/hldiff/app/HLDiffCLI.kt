@@ -7,6 +7,7 @@ import ru.karvozavr.hldiff.preprocessing.FilePairPreprocessor
 import ru.karvozavr.hldiff.steps.MoveActionExtractionStep
 import ru.karvozavr.hldiff.steps.NonStatementActionsGroupingStep
 import ru.karvozavr.hldiff.steps.StatementActionsGroupingStep
+import ru.karvozavr.hldiff.visualisation.VisualisationGenerator
 import java.io.File
 import java.nio.file.Paths
 
@@ -22,8 +23,15 @@ class HLDiffCLI(private val args: HLDiffArgs) {
 
         val result: HighLevelDiff = pipeline.apply(highLevelDiff)
 
-        val formatter = HLDiffFormatter(result, lowLevelDiff.treeContext, File(src).readText(), File(dst).readText())
-        println(formatter.formatJSON())
+
+        val codeBefore = File(src).readText()
+        val codeAfter = File(dst).readText()
+        val formatter = HLDiffFormatter(result, lowLevelDiff.treeContext, codeBefore, codeAfter)
+        if (args.visualize) {
+            println(VisualisationGenerator().generate(formatter.formatJSON(), codeBefore, codeAfter))
+        } else {
+            println(formatter.formatJSON())
+        }
     }
 
     private fun buildPipeline(): Pipeline<HighLevelDiff> {
