@@ -20,7 +20,7 @@ import java.util.ArrayDeque;
 @Register(id = "python-pythonparser", accept = {"\\.py$"}, priority = Registry.Priority.MAXIMUM)
 public class PythonTreeGenerator extends ExternalProcessTreeGenerator {
 
-    private static final String PYTHONPARSER_CMD = "/home/karvozavr/Dropbox/studies/diploma/hldiff/python-gen/src/main/resources/pythonparser3.py";
+    private static final String PYTHONPARSER_CMD = "/home/karvozavr/Desktop/hldiff/python-gen/src/main/resources/pythonparser3.py";
 
     private static final QName VALUE = new QName("value");
 

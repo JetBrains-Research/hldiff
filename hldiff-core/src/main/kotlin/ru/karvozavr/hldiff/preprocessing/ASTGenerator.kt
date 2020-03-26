@@ -7,6 +7,7 @@ import com.github.gumtreediff.gen.python.PythonTreeGenerator
 import com.github.gumtreediff.tree.ITree
 import kotlin.jvm.javaClass
 import com.github.gumtreediff.tree.TreeContext
+import java.io.File
 import java.util.*
 
 val CUSTOM_TREE_GENERATORS = listOf(
@@ -24,5 +25,6 @@ class ASTGenerator(file: String) {
         }
     }
 
+    val programText: String = File(file).readText()
     val treeContext: TreeContext = Generators.getInstance().getTree(file)
 }
