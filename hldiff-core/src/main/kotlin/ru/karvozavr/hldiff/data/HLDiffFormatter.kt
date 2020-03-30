@@ -1,11 +1,9 @@
 package ru.karvozavr.hldiff.data
 
-import com.github.gumtreediff.actions.model.Move
-import com.github.gumtreediff.tree.TreeContext
-import kotlinx.serialization.json.*
-import ru.karvozavr.hldiff.actions.MoveAction
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 
-class HLDiffFormatter(private val hldiff: HighLevelDiff, private val treeContext: TreeContext, private val codeBefore: String, private val codeAfter: String) {
+class HLDiffFormatter(private val hldiff: HighLevelDiff, private val codeBefore: String, private val codeAfter: String) {
 
     fun formatJSON(): String {
         val json = Json(JsonConfiguration.Stable)
@@ -13,7 +11,7 @@ class HLDiffFormatter(private val hldiff: HighLevelDiff, private val treeContext
             HighLevelActionDTO(
                     id = idx,
                     nodeId = it.node.id,
-                    name = it.format(treeContext, codeBefore, codeAfter),
+                    name = it.format(hldiff.treeAfter, codeBefore, codeAfter),
                     type = it.getActionType(),
                     groupedActions = emptyList(), // TODO get grouped actions
                     startPosition = it.node.pos,
@@ -31,7 +29,7 @@ class HLDiffFormatter(private val hldiff: HighLevelDiff, private val treeContext
     fun formatText(): String {
         val textBuilder = StringBuilder()
         hldiff.highLevelEditScript.forEach {
-            textBuilder.append(it.format(treeContext, codeBefore, codeAfter))
+            textBuilder.append(it.format(hldiff.treeAfter, codeBefore, codeAfter))
         }
         return textBuilder.toString()
     }

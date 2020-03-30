@@ -13,8 +13,8 @@ data class HighLevelDiff(val treeBefore: TreeContext,
                          val highLevelEditScript: HighLevelEditScript,
                          val mappings: MappingStore,
                          val languageInfo: LanguageInfo,
-                         val programBeforeText: String?,
-                         val programAfterText: String?) {
+                         internal val programBeforeText: String?,
+                         internal val programAfterText: String?) {
 
     constructor(diff: LowLevelDiff)
             : this(diff.treeBefore, diff.treeAfter, diff.editScript, HighLevelEditScript(), diff.mappings, diff.languageInfo, null, null) // TODO
