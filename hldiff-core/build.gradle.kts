@@ -2,7 +2,7 @@ plugins {
     java
     kotlin("jvm") version "1.3.70"
     kotlin("plugin.serialization") version "1.3.70"
-    application
+    `java-library`
 }
 
 group = "ru.karvozavr"
@@ -18,8 +18,7 @@ dependencies {
     testCompile("junit", "junit", "4.12")
     compile(fileTree("include" to listOf("*.jar"), "dir" to "libs"))
     compile(project(":python-gen"))
-    compile("com.xenomachina:kotlin-argparser:2.0.7")
-    implementation( "com.google.code.gson:gson:2.8.6")
+    implementation("com.google.code.gson:gson:2.8.6")
 }
 
 configure<JavaPluginConvention> {
@@ -35,7 +34,3 @@ tasks {
     }
 }
 
-application {
-    applicationName = "hldiff"
-    mainClassName = "ru.karvozavr.hldiff.app.MainKt"
-}
