@@ -1,7 +1,6 @@
 package ru.karvozavr.hldiff.data
 
-import kotlinx.serialization.*
-import kotlinx.serialization.json.*
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class LowLevelActionDTO(val nodeId: Int, val type: String, val name: String, val parent: Int)
