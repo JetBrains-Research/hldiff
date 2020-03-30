@@ -11,9 +11,11 @@ class StatementActionsGroupingStep : PipelineStep<HighLevelDiff>() {
     override fun processData(payload: HighLevelDiff): HighLevelDiff {
         val languageInfo = payload.languageInfo
 
-        payload.lowLevelEditScript.forEach {
-            val isInsertOrDelete = it is Insert || it is Delete
-            if (isInsertOrDelete && languageInfo.isDeclarationOrStatement(it.node) && !payload.isUsed(it)) {
+        payload.lowLevelEditScript
+                .filter { it is Insert || it is Delete }
+                .sortedBy { it.node.depth } // sort from root to leaves
+                .forEach {
+            if (languageInfo.isDeclarationOrStatement(it.node) && !payload.isUsed(it)) {
                 val action = StatementsActionsGroupingTraversal(it, payload).groupActions()
                 payload.highLevelEditScript.add(action)
             }

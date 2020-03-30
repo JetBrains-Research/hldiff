@@ -1,0 +1,101 @@
+:root {
+    --add-color: rgba(124, 252, 0, 0.5);
+    --move-color: rgba(100, 149, 237, 0.5);
+    --update-color: rgba(244, 164, 96, 0.5);
+    --delete-color: rgba(255, 0, 0, 0.5);
+    --line-color: rgb(0, 0, 0);
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+}
+
+.code {
+    border: 1px solid black;
+}
+
+code {
+    display: block;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.added {
+    background-color: var(--add-color);
+}
+
+.removed {
+    background-color: red;
+}
+
+.moved {
+    background-color: var(--move-color);
+}
+
+.updated {
+    background-color: var(--update-color);
+}
+
+.change {
+    padding: 10pt;
+    margin-bottom: 10pt;
+    display: block;
+}
+
+.change-addition {
+    border: 2px solid var(--add-color);
+    background-color: #7CFC0033;
+}
+
+.change-addition:hover {
+    background-color: #7CFC00AA;
+}
+
+.change-move {
+    border: 2px solid var(--move-color);
+    background-color: #6495ED33;
+}
+
+.change-move:hover {
+    background-color: #6495EDAA;
+}
+
+.change-update {
+    border: 2px solid var(--update-color);
+    background-color: #F4A46033;
+}
+
+.change-update:hover {
+    background-color: #F4A460AA;
+}
+
+.change-delete {
+    border: 2px solid var(--delete-color);
+    background-color: #FF000033;
+}
+
+.change-delete:hover {
+    background-color: #FF0000AA;
+}
+
+.svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.line {
+    stroke-width: 3px;
+    stroke: var(--line-color);
+}
+
+svg {
+    pointer-events: none;
+}
+
+svg * {
+    pointer-events: all;
+}

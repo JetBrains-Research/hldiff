@@ -19,6 +19,7 @@
     {"id": 28, "type": "nested", "name": "Initializer"},
     {"id": 30, "type": "atomic", "name": "LabeledStatement"},
     {"id": 31, "type": "nested", "name": "MethodDeclaration"},
+    {"id": 32, "type": "atomic", "name": "MethodInvocation"},
     {"id": 44, "type": "atomic", "name": "SingleVariableDeclaration"},
     {"id": 46, "type": "atomic", "name": "SuperConstructorInvocation"},
     {"id": 49, "type": "nested", "name": "SwitchCase"},

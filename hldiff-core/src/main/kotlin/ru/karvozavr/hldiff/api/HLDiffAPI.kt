@@ -1,28 +1,30 @@
-package ru.karvozavr.hldiff.app
+package ru.karvozavr.hldiff.api
 
-import com.github.gumtreediff.tree.TreeContext
 import ru.karvozavr.hldiff.data.HighLevelDiff
 import ru.karvozavr.hldiff.pipeline.Pipeline
 import ru.karvozavr.hldiff.preprocessing.FilePairPreprocessor
 import ru.karvozavr.hldiff.steps.MoveActionExtractionStep
 import ru.karvozavr.hldiff.steps.NonStatementActionsGroupingStep
 import ru.karvozavr.hldiff.steps.StatementActionsGroupingStep
-import java.io.File
-import java.nio.file.Paths
 
-class HLDiffCLI(private val args: HLDiffArgs) {
+/**
+ * HLDiff API
+ */
+class HLDiffAPI {
 
-    fun runHLDiffForFilePair() {
-        val src = Paths.get(args.source).toAbsolutePath().toString()
-        val dst = Paths.get(args.destination).toAbsolutePath().toString()
-        val lowLevelDiff = FilePairPreprocessor().processFilePair(src, dst)
+    /**
+     * Generates a high-level difference between two files
+     *
+     * Note: to determine the programming language file extension is used
+     *
+     * @param sourceFile program file before changes
+     * @param destinationFile program file after changes
+     */
+    fun getHighLevelDiff(sourceFile: String, destinationFile: String): HighLevelDiff {
+        val lowLevelDiff = FilePairPreprocessor().processFilePair(sourceFile, destinationFile)
         val highLevelDiff = HighLevelDiff(lowLevelDiff)
-
         val pipeline = buildPipeline()
-
-        val result: HighLevelDiff = pipeline.apply(highLevelDiff)
-
-        printHighLevelEditScript(result, File(src).readText(), File(dst).readText(), lowLevelDiff.treeContext)
+        return pipeline.apply(highLevelDiff)
     }
 
     private fun buildPipeline(): Pipeline<HighLevelDiff> {
@@ -34,11 +36,5 @@ class HLDiffCLI(private val args: HLDiffArgs) {
                 .pipe(moveExtractionStep)
                 .pipe(statementsActionsGroupingStep)
                 .pipe(nonStatementActionsGroupingStep)
-    }
-
-    private fun printHighLevelEditScript(result: HighLevelDiff, before: String, after: String, treeContext: TreeContext) {
-        result.highLevelEditScript.forEach {
-            println(it.format(treeContext, before, after))
-        }
     }
 }

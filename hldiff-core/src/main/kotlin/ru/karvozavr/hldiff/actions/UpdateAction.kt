@@ -12,7 +12,12 @@ class UpdateAction(node: ITree, val type: String, val actions: List<Action>) : H
         actions.forEach {
             sb.append("\t\t${it.format(context)}\n")
         }
+
         return sb.toString()
+    }
+
+    override fun getActionType(): String {
+        return "update"
     }
 
     override fun toString(): String {

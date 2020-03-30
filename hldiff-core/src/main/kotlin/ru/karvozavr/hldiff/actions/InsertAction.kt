@@ -9,6 +9,10 @@ class InsertAction(node: ITree, val type: String, val newParent: String, val pos
         return toString()
     }
 
+    override fun getActionType(): String {
+        return "add"
+    }
+
     override fun toString(): String {
         return "Insert $type to $newParent at position $position"
     }

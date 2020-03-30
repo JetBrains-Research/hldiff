@@ -8,6 +8,6 @@ class FilePairPreprocessor {
         val astBefore = ASTGenerator(before).treeContext
         val astAfter = ASTGenerator(after).treeContext
         astAfter.importTypeLabels(astBefore)
-        return LowLevelDiff(astBefore.root, astAfter.root, JSONLanguageConfigurationLoader.getLanguageConfigurationForFile(before), astAfter)
+        return LowLevelDiff(astBefore, astAfter, JSONLanguageConfigurationLoader.getLanguageConfigurationForFile(before), astAfter)
     }
 }

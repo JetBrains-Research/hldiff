@@ -1,8 +1,7 @@
 package ru.karvozavr.hldiff.language
 
 import com.google.gson.Gson
-import java.nio.file.Files
-import java.nio.file.Paths
+import com.google.gson.JsonObject
 
 class LanguageDTO(
         val language: String,
@@ -17,13 +16,17 @@ object JSONLanguageConfigurationLoader : LanguageConfigurationLoader {
     private val configurations = mutableListOf<LanguageConfiguration>()
 
     init {
-        val path = Paths.get("src", "main", "resources", "language").toAbsolutePath()
-        Files.list(path).forEach {
-            if (it.fileName.toString().endsWith(".json")) {
-                val json = it.toFile().readText()
-                loadConfiguration(json)
-            }
+        val languages = loadLanguagesList()
+        languages.forEach {
+            val json = this.javaClass.classLoader.getResourceAsStream("language/$it").reader().readText()
+            loadConfiguration(json)
         }
+    }
+
+    private fun loadLanguagesList(): List<String> {
+        val json = this.javaClass.classLoader.getResourceAsStream("language/languages").reader().readText()
+        val languages = gson.fromJson(json, JsonObject::class.java)
+        return languages.get("configurations").asJsonArray.map { it.asString }.toList()
     }
 
     private fun loadConfiguration(objectString: String) {
@@ -32,6 +35,13 @@ object JSONLanguageConfigurationLoader : LanguageConfigurationLoader {
     }
 
     override fun getLanguageConfigurationForFile(fileName: String): LanguageInfo {
-        return configurations.first { it.fileIsOfLanguage(fileName) }
+        return configurations.firstOrNull { it.fileIsOfLanguage(fileName) }
+                ?: throw LanguageConfigurationLoadException("Configuration for file ${fileName} not found.")
+
+    }
+
+    override fun getLanguageConfigurationByLanguageName(languageName: String): LanguageInfo {
+        return configurations.firstOrNull { it.name == languageName }
+                ?: throw LanguageConfigurationLoadException("Configuration for language ${languageName} not found.")
     }
 }

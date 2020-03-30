@@ -23,7 +23,7 @@ class ASTGeneratorTest {
 
     @Test
     fun testPython() {
-        val file = Paths.get(javaClass.classLoader.getResource("b.py")!!.toURI()).toString()
+        val file = Paths.get(javaClass.classLoader.getResource("large.py")!!.toURI()).toString()
         val generator = ASTGenerator(file)
         val ast = generator.treeContext.root
 
@@ -40,6 +40,6 @@ class ASTGeneratorTest {
                     print("{\"id\": ${it.type}, \"type\": \"atomic\", \"name\": \"${generator.treeContext.getTypeLabel(it)}\"},\n")
                 }
 
-        assertEquals("FunctionDef", generator.treeContext.getTypeLabel(ast.getChild(0)))
+//        assertEquals("FunctionDef", generator.treeContext.getTypeLabel(ast.getChild(0)))
     }
 }
