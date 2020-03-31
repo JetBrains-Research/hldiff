@@ -4,6 +4,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import ru.karvozavr.hldiff.data.HighLevelActionDTO
 import ru.karvozavr.hldiff.data.HighLevelDiffDTO
+import java.io.BufferedReader
 import java.io.File
 
 data class Event(val type: EventType, val action: HighLevelActionDTO, val metric: Int) {
@@ -37,7 +38,7 @@ class VisualisationGenerator {
         val programAfterHtml = formatAfterProgram(eventsAfter, programAfter)
         val actionsHTML = formatActions(actionsFiltered.sortedBy { it.startPosition })
 
-        val template = File(this.javaClass.getResource("/visualization/visual_template.html").toURI()).readText()
+        val template = this.javaClass.classLoader.getResourceAsStream("visualization/visual_template.html").bufferedReader().use(BufferedReader::readText)
         return template.replace("__PROGRAM_BEFORE", programBeforeHtml)
                 .replace("__ACTIONS", actionsHTML)
                 .replace("__PROGRAM_AFTER", programAfterHtml)
