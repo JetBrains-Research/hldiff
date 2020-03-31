@@ -12,15 +12,18 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
+import java.io.*;
+import java.nio.file.*;
+import java.nio.file.attribute.FileAttribute;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.ArrayDeque;
+import java.util.Set;
 
 @Register(id = "python-pythonparser", accept = {"\\.py$"}, priority = Registry.Priority.MAXIMUM)
 public class PythonTreeGenerator extends ExternalProcessTreeGenerator {
 
-    private static final String PYTHONPARSER_CMD = "/home/karvozavr/Desktop/hldiff/python-gen/src/main/resources/pythonparser3.py";
+    private static final String PYTHONPARSER_CMD = getResourceAsFile("pythonparser3.py");
 
     private static final QName VALUE = new QName("value");
 
@@ -41,6 +44,25 @@ public class PythonTreeGenerator extends ExternalProcessTreeGenerator {
         lr = new LineReader(r);
         String output = readStandardOutput(lr);
         return getTreeContext(output);
+    }
+
+    private static String getResourceAsFile(String resourcePath) {
+        try {
+            InputStream in = PythonTreeGenerator.class.getClassLoader().getResourceAsStream(resourcePath);
+            if (in == null) {
+                return null;
+            }
+            Path pythonParserPath = Paths.get(System.getProperty("user.dir"), ".pythonparser_generated.py");
+            Files.deleteIfExists(pythonParserPath);
+            Path tempFile = Files.createFile(pythonParserPath);
+            Files.copy(in, tempFile, StandardCopyOption.REPLACE_EXISTING);
+            Set<PosixFilePermission> permissions = PosixFilePermissions.fromString("rwxrwxrwx");
+            Files.setPosixFilePermissions(tempFile, permissions);
+            return tempFile.toAbsolutePath().toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public TreeContext getTreeContext(String xml) {
