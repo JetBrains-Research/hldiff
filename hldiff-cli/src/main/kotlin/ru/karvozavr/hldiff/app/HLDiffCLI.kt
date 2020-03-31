@@ -16,28 +16,32 @@ class HLDiffCLI(private val args: HLDiffArgs) {
 
     fun runHLDiff() {
         if (args.batch) {
-            val outputDir = args.outputDirectory
-            val filePairs = mutableListOf<FilePair>()
-            var line: String? = readLine()
-            var lineNumber = -1
-            while (line != null) {
-                ++lineNumber
-
-                val split = line.trim().split(Regex("\\s+"))
-                if (split.size != 2) {
-                    System.err.println("Incorrect input line $lineNumber:\n$line")
-                    line = readLine()
-                    continue
-                }
-
-                filePairs.add(FilePair(split[0], split[1]))
-                line = readLine()
-            }
-
-            runHLDiffForFilePairs(filePairs, outputDir)
+            processBatch()
         } else {
             runHLDiffForFilePair()
         }
+    }
+
+    private fun processBatch() {
+        val outputDir = args.outputDirectory
+        val filePairs = mutableListOf<FilePair>()
+        var line: String? = readLine()
+        var lineNumber = -1
+        while (line != null) {
+            ++lineNumber
+
+            val split = line.trim().split(Regex("\\s+"))
+            if (split.size != 2) {
+                System.err.println("Incorrect input line $lineNumber:\n$line")
+                line = readLine()
+                continue
+            }
+
+            filePairs.add(FilePair(split[0], split[1]))
+            line = readLine()
+        }
+
+        runHLDiffForFilePairs(filePairs, outputDir)
     }
 
     private fun runHLDiffForFilePairs(pairs: List<FilePair>, outputDir: Path) {
