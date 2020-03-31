@@ -2,7 +2,6 @@ package ru.karvozavr.hldiff.app
 
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.default
-import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
