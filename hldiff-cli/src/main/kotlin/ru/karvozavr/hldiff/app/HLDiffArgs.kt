@@ -20,13 +20,6 @@ class HLDiffArgs(parser: ArgParser) {
 
     val outputDirectory: Path by parser.storing(
             "-o", "--outdir",
-            help = "Output directory for batch processing.")
-    {
-        val dir = Paths.get(this)
-        if (!Files.exists(dir)) {
-            Files.createDirectories(dir)
-        } else {
-            dir
-        }
-    }.default(Files.createDirectories(Paths.get("hldiff-output")))
+            help = "Output directory for batch processing.") { Paths.get(this) }
+            .default(Paths.get("hldiff-output"))
 }

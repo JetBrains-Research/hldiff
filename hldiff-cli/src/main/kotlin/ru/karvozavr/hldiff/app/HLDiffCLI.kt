@@ -23,7 +23,7 @@ class HLDiffCLI(private val args: HLDiffArgs) {
     }
 
     private fun processBatch() {
-        val outputDir = args.outputDirectory
+        val outputDir = Files.createDirectories(args.outputDirectory)
         val filePairs = mutableListOf<FilePair>()
         var line: String? = readLine()
         var lineNumber = -1
