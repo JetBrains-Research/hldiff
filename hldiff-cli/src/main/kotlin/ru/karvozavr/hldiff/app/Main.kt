@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
 
     try {
         val cli = HLDiffCLI(arguments)
-        cli.runHLDiffForFilePair()
+        cli.runHLDiff()
     } catch (e: SystemExitException) {
         e.printAndExit()
     }
