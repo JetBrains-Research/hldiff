@@ -27,5 +27,5 @@ jobs:
 
     - uses: actions/upload-artifact@v1
       with:
-        name: hldiff-cli.zip
+        name: hldiff-cli
         path: hldiff-cli/build/distributions/
