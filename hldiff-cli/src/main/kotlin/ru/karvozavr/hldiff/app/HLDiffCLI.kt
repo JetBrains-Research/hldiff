@@ -5,10 +5,8 @@ import ru.karvozavr.hldiff.data.HLDiffFormatter
 import ru.karvozavr.hldiff.data.HighLevelDiff
 import ru.karvozavr.hldiff.visualisation.VisualisationGenerator
 import java.io.File
-import java.lang.Exception
 import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.StandardOpenOption
 
 class HLDiffCLI(private val args: HLDiffArgs) {
 
