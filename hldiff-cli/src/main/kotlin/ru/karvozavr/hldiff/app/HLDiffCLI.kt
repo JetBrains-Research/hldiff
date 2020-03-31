@@ -13,7 +13,7 @@ import java.nio.file.StandardOpenOption
 class HLDiffCLI(private val args: HLDiffArgs) {
 
     private val api: HLDiffAPI = HLDiffAPI()
-    //../hldiff-core/src/test/resources/a.py
+
     fun runHLDiff() {
         if (args.batch) {
             val outputDir = args.outputDirectory
