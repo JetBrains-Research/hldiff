@@ -73,6 +73,8 @@ class VisualisationGenerator {
             lastPosition = generateActionHTML(event, builder, program, lastPosition, startPosition, endPosition, event.action.id)
         }
 
+        builder.append(program.substring(lastPosition))
+
         return builder.toString()
     }
 
@@ -91,6 +93,8 @@ class VisualisationGenerator {
 
             lastPosition = generateActionHTML(event, builder, program, lastPosition, startPosition, endPosition, event.action.id)
         }
+
+        builder.append(program.substring(lastPosition))
 
         return builder.toString()
     }
