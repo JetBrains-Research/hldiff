@@ -1,3 +1,3 @@
 package ru.karvozavr.hldiff.language
 
-data class StatementInfo(val name: String, val kind: String, val id: Int)
+data class StatementInfo(val name: String, val type: String, val id: Int)

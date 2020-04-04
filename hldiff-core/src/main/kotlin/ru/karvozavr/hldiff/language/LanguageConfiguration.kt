@@ -13,17 +13,18 @@ class LanguageConfiguration(val name: String,
 
     override fun isDeclarationOrStatement(node: ITree): Boolean {
         val type = node.type
-        return type in statements
+        val kind = statements[type]?.type
+        return "atomic" == kind || "nested" == kind
     }
 
     override fun isComplex(node: ITree): Boolean {
         val type = node.type
-        return "complex" == statements[type]?.kind
+        return "complex" == statements[type]?.type
     }
 
     override fun isAtomic(node: ITree): Boolean {
         val type = node.type
-        return "atomic" == statements[type]?.kind
+        return "atomic" == statements[type]?.type
     }
 
     override fun isBlock(node: ITree): Boolean {
