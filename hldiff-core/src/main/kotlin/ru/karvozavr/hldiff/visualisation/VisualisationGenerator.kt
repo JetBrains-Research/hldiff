@@ -17,7 +17,7 @@ data class Event(val type: EventType, val action: HighLevelActionDTO, val metric
 class VisualisationGenerator {
 
     companion object {
-        val template = VisualisationGenerator.javaClass.classLoader.getResourceAsStream("visualization/visual_template.html").bufferedReader().use(BufferedReader::readText)
+        val template = VisualisationGenerator::class.java.classLoader.getResourceAsStream("visualization/visual_template.html").bufferedReader().use(BufferedReader::readText)
     }
 
     fun generate(jsonDiff: String, programBefore: String, programAfter: String): String {
