@@ -1,1 +1,8 @@
-<p>code-fragment works!</p>
+<span *ngIf="codeFragment.code"
+      >{{codeFragment.code}}</span>
+<span *ngIf="codeFragment.children && !codeFragment.change">
+  <app-code-fragment *ngFor="let fragment of codeFragment.children" [codeFragment]="fragment"></app-code-fragment>
+</span>
+<span *ngIf="codeFragment.change" [ngClass]="['changed-code', codeFragment.change.type, 'code-change-' + codeFragment.change.id]">
+  <app-code-fragment *ngFor="let fragment of codeFragment.children" [codeFragment]="fragment"></app-code-fragment>
+</span>

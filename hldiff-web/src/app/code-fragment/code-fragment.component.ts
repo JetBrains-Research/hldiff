@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { CodeFragment } from '../code-fragment';
 
 @Component({
   selector: 'app-code-fragment',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CodeFragmentComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  codeFragment: CodeFragment;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
