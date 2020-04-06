@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { HLDiffService } from '../hldiff.service';
 import { HLDiff } from '../hldiff';
 import { SourceCodeType } from '../source-code/source-code-type';
+import { createElementCssSelector } from '@angular/compiler';
 
 @Component({
   selector: 'app-diff',
@@ -64,7 +65,7 @@ export class DiffComponent implements OnInit, AfterViewInit {
         const start = elem;
         const end = document.getElementById(changeId);
 
-        this.drawLine(start, end, line);
+        // this.drawLine(start, end, line);
       });
     }
   }
@@ -88,7 +89,7 @@ export class DiffComponent implements OnInit, AfterViewInit {
           change.style.backgroundColor = this.setAlpha(document.defaultView.getComputedStyle(change, null)['background-color'], 1);
         }
 
-        if (elem.className.includes('change-addition')) {
+        if (elem.className.includes('change-add')) {
           this.drawLine(codeChanges[0], elem, line, 'var(--add-color)');
         } else if (elem.className.includes('change-move')) {
           this.drawLine(codeChanges[0], elem, line, 'var(--move-color)');
