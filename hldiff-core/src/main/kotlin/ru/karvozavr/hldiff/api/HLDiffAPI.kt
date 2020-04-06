@@ -3,6 +3,7 @@ package ru.karvozavr.hldiff.api
 import ru.karvozavr.hldiff.data.HighLevelDiff
 import ru.karvozavr.hldiff.pipeline.Pipeline
 import ru.karvozavr.hldiff.preprocessing.FilePairPreprocessor
+import ru.karvozavr.hldiff.steps.FinalStep
 import ru.karvozavr.hldiff.steps.MoveActionExtractionStep
 import ru.karvozavr.hldiff.steps.NonStatementActionsGroupingStep
 import ru.karvozavr.hldiff.steps.StatementActionsGroupingStep
@@ -36,5 +37,6 @@ class HLDiffAPI {
                 .pipe(moveExtractionStep)
                 .pipe(statementsActionsGroupingStep)
                 .pipe(nonStatementActionsGroupingStep)
+            .pipe(FinalStep())
     }
 }
