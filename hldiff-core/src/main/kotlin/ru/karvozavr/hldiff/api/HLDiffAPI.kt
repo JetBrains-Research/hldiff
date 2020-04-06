@@ -7,36 +7,37 @@ import ru.karvozavr.hldiff.steps.FinalStep
 import ru.karvozavr.hldiff.steps.MoveActionExtractionStep
 import ru.karvozavr.hldiff.steps.NonStatementActionsGroupingStep
 import ru.karvozavr.hldiff.steps.StatementActionsGroupingStep
+import java.io.File
 
 /**
  * HLDiff API
  */
 class HLDiffAPI {
 
-    /**
-     * Generates a high-level difference between two files
-     *
-     * Note: to determine the programming language file extension is used
-     *
-     * @param sourceFile program file before changes
-     * @param destinationFile program file after changes
-     */
-    fun getHighLevelDiff(sourceFile: String, destinationFile: String): HighLevelDiff {
-        val lowLevelDiff = FilePairPreprocessor().processFilePair(sourceFile, destinationFile)
-        val highLevelDiff = HighLevelDiff(lowLevelDiff)
-        val pipeline = buildPipeline()
-        return pipeline.apply(highLevelDiff)
-    }
+  /**
+   * Generates a high-level difference between two files
+   *
+   * Note: to determine the programming language file extension is used
+   *
+   * @param sourceFile program file before changes
+   * @param destinationFile program file after changes
+   */
+  fun getHighLevelDiff(sourceFile: String, destinationFile: String): HighLevelDiff {
+    val lowLevelDiff = FilePairPreprocessor().processFilePair(sourceFile, destinationFile)
+    val highLevelDiff = HighLevelDiff(lowLevelDiff, File(sourceFile).readText(), File(destinationFile).readText())
+    val pipeline = buildPipeline()
+    return pipeline.apply(highLevelDiff)
+  }
 
-    private fun buildPipeline(): Pipeline<HighLevelDiff> {
-        val moveExtractionStep = MoveActionExtractionStep()
-        val statementsActionsGroupingStep = StatementActionsGroupingStep()
-        val nonStatementActionsGroupingStep = NonStatementActionsGroupingStep()
+  private fun buildPipeline(): Pipeline<HighLevelDiff> {
+    val moveExtractionStep = MoveActionExtractionStep()
+    val statementsActionsGroupingStep = StatementActionsGroupingStep()
+    val nonStatementActionsGroupingStep = NonStatementActionsGroupingStep()
 
-        return Pipeline<HighLevelDiff>()
-                .pipe(moveExtractionStep)
-                .pipe(statementsActionsGroupingStep)
-                .pipe(nonStatementActionsGroupingStep)
-            .pipe(FinalStep())
-    }
+    return Pipeline<HighLevelDiff>()
+        .pipe(moveExtractionStep)
+        .pipe(statementsActionsGroupingStep)
+        .pipe(nonStatementActionsGroupingStep)
+        .pipe(FinalStep())
+  }
 }

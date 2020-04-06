@@ -5,6 +5,7 @@ import org.junit.Test
 import ru.karvozavr.hldiff.actions.MoveAction
 import ru.karvozavr.hldiff.data.HighLevelDiff
 import ru.karvozavr.hldiff.preprocessing.FilePairPreprocessor
+import java.io.File
 import java.nio.file.Paths
 
 class MoveActionExtractionStepTest {
@@ -17,7 +18,7 @@ class MoveActionExtractionStepTest {
         val lowLevelDiff = FilePairPreprocessor().processFilePair(src, dst)
 
         val step = MoveActionExtractionStep()
-        val hlDiff = HighLevelDiff(lowLevelDiff)
+        val hlDiff = HighLevelDiff(lowLevelDiff, File(src).readText(), File(dst).readText())
         val resultDiff = step.apply(hlDiff)
 
         assertTrue(resultDiff.highLevelEditScript[0] is MoveAction)
