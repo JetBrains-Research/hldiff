@@ -28,12 +28,11 @@ export class DiffComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     const changedCode = document.getElementsByClassName('changed-code');
     const changesList = document.getElementsByClassName('change');
-    console.log(changedCode.length);
 
     const line = document.getElementById('line');
     const line2 = document.getElementById('line2');
 
-    this.positionChanges(changesList, changedCode);
+    this.positionChanges(changesList);
     this.setChangedCodeListeners(changedCode, line);
     this.setChangesListListeners(changesList, line, line2);
   }
@@ -65,15 +64,12 @@ export class DiffComponent implements OnInit, AfterViewInit {
         const start = elem;
         const end = document.getElementById(changeId);
 
-        console.log(start);
         this.drawLine(start, end, line);
       });
-      console.log(elem.offsetTop);
     }
   }
 
   setAlpha(rgba, alpha) {
-    console.log(rgba);
     if (rgba.startsWith('rgba')) {
       return rgba.replace(/ ([^ ]*)\)/, alpha);
     } else {
@@ -86,9 +82,9 @@ export class DiffComponent implements OnInit, AfterViewInit {
       const codeChanges = document.querySelectorAll<HTMLElement>('.' + elem.id);
 
       elem.addEventListener('mouseenter', () => {
+        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < codeChanges.length; i++) {
           const change = codeChanges[i];
-          console.log('Enter', change.style.backgroundColor);
           change.style.backgroundColor = this.setAlpha(document.defaultView.getComputedStyle(change, null)['background-color'], 1);
         }
 
@@ -106,6 +102,7 @@ export class DiffComponent implements OnInit, AfterViewInit {
       });
 
       elem.addEventListener('mouseout', () => {
+        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < codeChanges.length; i++) {
           const change = codeChanges[i];
           line.setAttribute('x1', 0);
@@ -116,22 +113,18 @@ export class DiffComponent implements OnInit, AfterViewInit {
           line2.setAttribute('y1', 0);
           line2.setAttribute('x2', 0);
           line2.setAttribute('y2', 0);
-          console.log('Exit', change.style.backgroundColor);
           change.style.backgroundColor = this.setAlpha(document.defaultView.getComputedStyle(change, null)['background-color'], 0.3);
         }
       });
     }
   }
 
-  positionChanges(changes, changedCode) {
+  positionChanges(changes) {
     const diffContainer = document.querySelectorAll<HTMLElement>('.diff')[0];
-    const codeChange0 = document.querySelectorAll<HTMLElement>('.' + changes[0].id)[0];
-    changes[0].style.top = (codeChange0.offsetTop - diffContainer.offsetTop) + 'px';
-    for (let i = 1; i < changes.length; i++) {
+    for (let i = 0; i < changes.length; i++) {
       const codeChange = document.querySelectorAll<HTMLElement>('.' + changes[i].id)[0];
-      console.log(codeChange.offsetTop + ' positioning');
       changes[i].style.top = Math.max(codeChange.offsetTop - diffContainer.offsetTop,
-        changes[i - 1].offsetTop + changes[i - 1].offsetHeight + 10) + 'px';
+        i > 0 ? changes[i - 1].offsetTop + changes[i - 1].offsetHeight + 10 : 0) + 'px';
     }
   }
 
