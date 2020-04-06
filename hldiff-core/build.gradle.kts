@@ -1,7 +1,6 @@
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization") version "1.3.70"
-    `java-library`
     id("com.github.johnrengelman.shadow") version "5.2.0"
 }
 
