@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --add-color: rgba(124, 252, 0, 0.5);
+  --move-color: rgba(100, 149, 237, 0.5);
+  --update-color: rgba(244, 164, 96, 0.5);
+  --delete-color: rgba(255, 0, 0, 0.5);
+  --line-color: rgb(0, 0, 0);
+}
+
+$add-color: rgba(124, 252, 0, 0.5);
+$move-color: rgba(100, 149, 237, 0.5);
+$update-color: rgba(244, 164, 96, 0.5);
+$delete-color: rgba(255, 0, 0, 0.5);
+$line-color: rgb(0, 0, 0);
