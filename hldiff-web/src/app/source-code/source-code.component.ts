@@ -45,6 +45,15 @@ export class SourceCodeComponent implements OnInit {
 
     this.rootCodeFragment = <CodeFragment>{ children: [], startPosition: 0, endPosition: src.length };
     let [changeIdx, lastPosition] = this.buildCodeFragmentsRecursive(this.rootCodeFragment, 0, 0, changes, src);
+
+    if (lastPosition < src.length) {
+      this.rootCodeFragment.children.push(<CodeFragment>{
+        startPosition: lastPosition,
+        endPosition: src.length,
+        code: src.slice(lastPosition, src.length)
+      });
+    }
+
     console.assert(changeIdx === changes.length, "ChangeId after tree build should be changes.length");
   }
 
