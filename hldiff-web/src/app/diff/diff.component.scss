@@ -7,49 +7,6 @@
   position: relative;
 }
 
-.change {
-  position: absolute;
-  width: calc(100% - 20pt);
-  padding: 10pt;
-  display: block;
-}
-
-.change-add {
-  border: 2px solid var(--add-color);
-  background-color: #7CFC0033;
-}
-
-.change-add:hover {
-  background-color: #7CFC00AA;
-}
-
-.change-move {
-  border: 2px solid var(--move-color);
-  background-color: #6495ED33;
-}
-
-.change-move:hover {
-  background-color: #6495EDAA;
-}
-
-.change-update {
-  border: 2px solid var(--update-color);
-  background-color: #F4A46033;
-}
-
-.change-update:hover {
-  background-color: #F4A460AA;
-}
-
-.change-delete {
-  border: 2px solid var(--delete-color);
-  background-color: #FF000033;
-}
-
-.change-delete:hover {
-  background-color: #FF0000AA;
-}
-
 .svg {
   position: absolute;
   top: 0;

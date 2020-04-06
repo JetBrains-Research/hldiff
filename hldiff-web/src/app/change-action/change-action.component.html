@@ -1,1 +1,12 @@
-<p>change-action works!</p>
+<div
+  #rootChange
+  (mouseenter)="enter()"
+  (mouseleave)="leave()"
+  [ngClass]="['change', 'change-' + change.type]"
+  [id]="'code-change-' + change.id"
+   >
+  {{change.name}}
+  <ul *ngIf="change.groupedActions.length > 0">
+    <li *ngFor="let action of change.groupedActions">{{action}}</li>
+  </ul>
+</div>

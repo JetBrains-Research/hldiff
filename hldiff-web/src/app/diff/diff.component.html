@@ -21,10 +21,7 @@
     </div>-->
 
   <div class="diff">
-    <div *ngFor="let change of diff.highLevelActions"
-         [ngClass]="['change', 'change-' + change.type]" [id]="'code-change-' + change.id">
-      {{change.name}}
-    </div>
+    <app-change-action *ngFor="let change of diff.highLevelActions" [change]="change"></app-change-action>
   </div>
 
   <app-source-code [diff]="diff" [type]="sourceCodeType.AFTER_CHANGES"></app-source-code>
