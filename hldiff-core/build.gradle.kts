@@ -9,10 +9,10 @@ group = "ru.karvozavr"
 version = "1.0-SNAPSHOT"
 
 dependencies {
-    compile(kotlin("stdlib"))
+    implementation(kotlin("stdlib"))
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
-    testCompile("junit", "junit", "4.12")
-    implementation(fileTree("include" to listOf("*.jar"), "dir" to "libs"))
-    compile(project(":python-gen"))
-    implementation("com.google.code.gson:gson:2.8.6")
+    api(project(":python-gen"))
+    api("com.google.code.gson:gson:2.8.6")
+    api(fileTree("include" to listOf("*.jar"), "dir" to "libs"))
+    testImplementation("junit", "junit", "4.12")
 }
