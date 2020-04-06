@@ -1,6 +1,6 @@
 import { Change } from "./change";
 
-interface HLDiff {
+export interface HLDiff {
   id: string,
   highLevelActions: Array<Change>,
   srcBefore: string,
