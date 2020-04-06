@@ -2,7 +2,6 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { HLDiffService } from '../hldiff.service';
 import { HLDiff } from '../hldiff';
 import { SourceCodeType } from '../source-code/source-code-type';
-import { createElementCssSelector } from '@angular/compiler';
 
 @Component({
   selector: 'app-diff',
