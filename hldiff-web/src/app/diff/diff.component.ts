@@ -13,7 +13,8 @@ export class DiffComponent implements OnInit, AfterViewInit {
 
   changes: Change[];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
 
@@ -44,7 +45,7 @@ export class DiffComponent implements OnInit, AfterViewInit {
       x2 += end.clientWidth;
     }
 
-    document.documentElement.style.setProperty('--line-color', setAlpha(color, 1));
+    document.documentElement.style.setProperty('--line-color', this.setAlpha(color, 1));
     line.setAttribute('x1', x1);
     line.setAttribute('y1', y1);
     line.setAttribute('x2', x2);
@@ -77,10 +78,11 @@ export class DiffComponent implements OnInit, AfterViewInit {
 
   setChangesListListeners(changesList, line, line2) {
     for (let elem of changesList) {
-      let codeChanges = document.getElementsByClassName(elem.id);
+      const codeChanges = document.querySelectorAll<HTMLElement>('.' + elem.id);
 
       elem.addEventListener('mouseenter', () => {
-        for (let change of codeChanges) {
+        for (let i = 0; i < codeChanges.length; i++) {
+          const change = codeChanges[i];
           console.log("Enter", change.style.backgroundColor);
           change.style.backgroundColor = this.setAlpha(document.defaultView.getComputedStyle(change, null)['background-color'], 1);
         }
