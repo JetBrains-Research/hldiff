@@ -14,6 +14,6 @@ repositories {
 }
 
 dependencies {
-    testCompile("junit", "junit", "4.12")
-    compile(files("../hldiff-core/libs/core-2.1.2.jar"))
+    implementation(files("../hldiff-core/libs/core-2.1.2.jar"))
+    testImplementation("junit", "junit", "4.12")
 }

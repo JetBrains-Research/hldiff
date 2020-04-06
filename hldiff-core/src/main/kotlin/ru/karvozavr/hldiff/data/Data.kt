@@ -17,4 +17,4 @@ data class HighLevelActionDTO(val id: Int,
                               val endPositionAfter: Int?)
 
 @Serializable
-data class HighLevelDiffDTO(val highLevelActions: List<HighLevelActionDTO>)
+data class HighLevelDiffDTO(val highLevelActions: List<HighLevelActionDTO>, val srcBefore: String, val srcAfter: String)

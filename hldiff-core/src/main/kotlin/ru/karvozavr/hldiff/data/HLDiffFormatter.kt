@@ -21,7 +21,7 @@ class HLDiffFormatter(private val hldiff: HighLevelDiff, private val codeBefore:
             )
         }
 
-        val hlDiffData = HighLevelDiffDTO(highLevelActions)
+        val hlDiffData = HighLevelDiffDTO(highLevelActions, hldiff.programBeforeText, hldiff.programAfterText)
 
         return json.toJson(HighLevelDiffDTO.serializer(), hlDiffData).toString()
     }

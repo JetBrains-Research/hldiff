@@ -43,16 +43,16 @@ data class HighLevelDiff(
         /**
          * Text of the program before changes
          */
-        internal val programBeforeText: String?,
+        internal val programBeforeText: String,
 
         /**
          * Text of the program after changes
          */
-        internal val programAfterText: String?
+        internal val programAfterText: String
 ) {
 
-    constructor(diff: LowLevelDiff)
-            : this(diff.treeBefore, diff.treeAfter, diff.editScript, HighLevelEditScript(), diff.mappings, diff.languageInfo, null, null) // TODO
+    constructor(diff: LowLevelDiff, src: String, dst: String)
+            : this(diff.treeBefore, diff.treeAfter, diff.editScript, HighLevelEditScript(), diff.mappings, diff.languageInfo, src, dst)
 
     private val usedActions = HashSet<Action>()
 

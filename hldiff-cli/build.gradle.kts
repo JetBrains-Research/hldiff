@@ -11,9 +11,9 @@ repositories {
 }
 
 dependencies {
-    compile(kotlin("stdlib"))
-    compile(project(":hldiff-core"))
-    compile("com.xenomachina:kotlin-argparser:2.0.7")
+    implementation(kotlin("stdlib"))
+    implementation(project(":hldiff-core"))
+    implementation("com.xenomachina:kotlin-argparser:2.0.7")
 }
 
 application {
