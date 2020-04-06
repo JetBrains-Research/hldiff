@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { HLDiff } from "../hldiff";
-import { SourceCodeType } from "./source-code.type";
-import { Change } from "../change";
-import { CodeFragment } from "../code-fragment";
+import { HLDiff } from '../hldiff';
+import { SourceCodeType } from './source-code-type';
+import { Change } from '../change';
+import { CodeFragment } from '../code-fragment';
 
 @Component({
   selector: 'app-source-code',
@@ -37,24 +37,25 @@ export class SourceCodeComponent implements OnInit {
 
     const changes = this.type === SourceCodeType.BEFORE_CHANGES
       ? this.diff.highLevelActions
-        .filter(change => change.startPosition !== undefined)
-        .sort((a, b) => b.startPosition - a.startPosition)
+        .filter(change => ['update', 'delete', 'move'].lastIndexOf(change.type) >= 0)
+        .sort((a, b) => a.startPosition - b.startPosition)
       : this.diff.highLevelActions
-        .filter(change => change.startPositionAfter !== undefined)
-        .sort((a, b) => b.startPositionAfter - a.startPositionAfter);
+        .filter(change => ['update', 'add', 'move'].lastIndexOf(change.type) >= 0)
+        .sort((a, b) => a.startPositionAfter - b.startPositionAfter);
 
-    this.rootCodeFragment = <CodeFragment>{ children: [], startPosition: 0, endPosition: src.length };
-    let [changeIdx, lastPosition] = this.buildCodeFragmentsRecursive(this.rootCodeFragment, 0, 0, changes, src);
+    this.rootCodeFragment = ({ children: [], startPosition: 0, endPosition: src.length } as CodeFragment);
+    const [changeIdx, lastPosition] = this.buildCodeFragmentsRecursive(this.rootCodeFragment, 0, 0, changes, src);
 
     if (lastPosition < src.length) {
-      this.rootCodeFragment.children.push(<CodeFragment>{
+      this.rootCodeFragment.children.push({
         startPosition: lastPosition,
         endPosition: src.length,
         code: src.slice(lastPosition, src.length)
-      });
+      } as CodeFragment);
     }
 
-    console.assert(changeIdx === changes.length, "ChangeId after tree build should be changes.length");
+    console.log(changes.length);
+    console.assert(changeIdx === changes.length, 'ChangeId after tree build should be changes.length');
   }
 
   /**
@@ -68,29 +69,30 @@ export class SourceCodeComponent implements OnInit {
    *
    * @return (currentChange, lastPosition)
    */
-  private buildCodeFragmentsRecursive(root: CodeFragment, lastPosition: number, currentChange: number, changes: Array<Change>, src: string): [number, number] {
+  private buildCodeFragmentsRecursive(
+    root: CodeFragment, lastPosition: number, currentChange: number, changes: Array<Change>, src: string): [number, number] {
     while (currentChange < changes.length) {
       const change = changes[currentChange];
-      let startPosition = this.getStartPosition(change);
-      let endPosition = this.getEndPosition(change);
+      const startPosition = this.getStartPosition(change);
+      const endPosition = this.getEndPosition(change);
 
       if (endPosition < root.endPosition) {
         // Add source code fragment before this change
         if (lastPosition < startPosition) {
-          root.children.push(<CodeFragment>{
+          root.children.push({
             startPosition: lastPosition,
             endPosition: startPosition,
             code: src.slice(lastPosition, startPosition)
-          });
+          } as CodeFragment);
         }
 
         // Add this change fragment
-        let fragment: CodeFragment = <CodeFragment>{
-          startPosition: startPosition,
-          endPosition: endPosition,
+        const fragment: CodeFragment = {
+          startPosition,
+          endPosition,
           children: [],
-          change: change
-        };
+          change
+        } as CodeFragment;
         root.children.push(fragment);
 
         // Add children fragments
@@ -105,18 +107,20 @@ export class SourceCodeComponent implements OnInit {
 
         // Add fragment after last child
         if (lastPosition < endPosition) {
-          fragment.children.push(<CodeFragment>{
+          fragment.children.push({
             startPosition: lastPosition,
-            endPosition: endPosition,
+            endPosition,
             code: src.slice(lastPosition, endPosition)
-          });
+          } as CodeFragment);
         }
+
+        lastPosition = endPosition;
       } else {
         return [currentChange, lastPosition];
       }
     }
 
-    return [currentChange, lastPosition]
+    return [currentChange, lastPosition];
   }
 
 }
