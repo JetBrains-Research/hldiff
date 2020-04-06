@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { DiffComponent } from './diff/diff.component';
 import { SourceCodeComponent } from './source-code/source-code.component';
 import { CodeFragmentComponent } from './code-fragment/code-fragment.component';
+import { ChangeActionComponent } from './change-action/change-action.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DiffComponent,
     SourceCodeComponent,
-    CodeFragmentComponent
+    CodeFragmentComponent,
+    ChangeActionComponent
   ],
   imports: [
     BrowserModule,
