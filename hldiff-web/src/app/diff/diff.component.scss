@@ -11,21 +11,6 @@
   grid-template-columns: 40% 20% 40%;
 }
 
-.code {
-  border: 1px solid black;
-}
-
-figure {
-  margin-inline-start: 5pt;
-  margin-inline-end: 5pt;
-}
-
-code {
-  display: block;
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-
 .added {
   background-color: var(--add-color);
 }

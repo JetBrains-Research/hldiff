@@ -11,14 +11,7 @@
 
 
 <div class="wrapper">
-  <figure class="code">
-    <figcaption>Before:</figcaption>
-
-    <code>
-      {{codeBefore}}
-    </code>
-
-  </figure>
+  <app-source-code [diff]="diff" [type]="sourceCodeType.BEFORE_CHANGES"></app-source-code>
 
   <div class="diff">
     <div class="change change-addition" id="code-change-6">Insert ImportDeclaration to CompilationUnit at position 11</div><div class="change change-addition" id="code-change-7">Insert ImportDeclaration to CompilationUnit at position 21</div><div class="change change-move" id="code-change-0">Move FieldDeclaration to TypeDeclaration at position 11</div><div class="change change-move" id="code-change-1">Move FieldDeclaration to TypeDeclaration at position 6</div><div class="change change-addition" id="code-change-8">Insert FieldDeclaration to TypeDeclaration at position 6</div><div class="change change-addition" id="code-change-10">Insert MarkerAnnotation to FieldDeclaration at position 0</div><div class="change change-move" id="code-change-3">Move FieldAccess to MethodInvocation at position 0</div><div class="change change-update" id="code-change-19">Update Assignment with
@@ -31,16 +24,7 @@
   </div><div class="change change-move" id="code-change-4">Move SimpleType to VariableDeclarationStatement at position 0</div><div class="change change-addition" id="code-change-14">Insert VariableDeclarationStatement to Block at position 3</div>
   </div>
 
-  <figure class="code">
-    <figcaption>After:</figcaption>
-
-    <code>
-      {{codeAfter}}
-    </code>
-
-  </figure>
-
-
+  <app-source-code [diff]="diff" [type]="sourceCodeType.AFTER_CHANGES"></app-source-code>
 </div>
 
 <script type="text/javascript">

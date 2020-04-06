@@ -1,5 +1,9 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Change } from '../change';
+import { HLDiffService } from "../hldiff.service";
+import { by, element } from "protractor";
+import { HLDiff } from "../hldiff";
+import { SourceCodeType } from "../source-code/source-code.type";
 
 @Component({
   selector: 'app-diff',
@@ -8,16 +12,18 @@ import { Change } from '../change';
 })
 export class DiffComponent implements OnInit, AfterViewInit {
 
-  codeBefore: string;
-  codeAfter: string;
+  sourceCodeType = SourceCodeType;
+  private hldiffService: HLDiffService;
+  private diff: HLDiff;
 
-  changes: Change[];
-
-  constructor() {
+  constructor(hldiffService: HLDiffService) {
+    this.hldiffService = hldiffService;
   }
 
   ngOnInit(): void {
-
+    this.hldiffService.getDiffById("42").subscribe(hldiff => {
+      this.diff = hldiff;
+    });
   }
 
   ngAfterViewInit(): void {
