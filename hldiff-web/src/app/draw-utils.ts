@@ -11,10 +11,10 @@ export function drawLine(start: HTMLElement, end: HTMLElement, line: HTMLElement
   }
 
   document.documentElement.style.setProperty('--line-color', setAlpha(color, 1));
-  line.setAttribute('x1', x1);
-  line.setAttribute('y1', y1);
-  line.setAttribute('x2', x2);
-  line.setAttribute('y2', y2);
+  line.setAttribute('x1', x1.toString());
+  line.setAttribute('y1', y1.toString());
+  line.setAttribute('x2', x2.toString());
+  line.setAttribute('y2', y2.toString());
 }
 
 export function setAlpha(rgba, alpha) {
