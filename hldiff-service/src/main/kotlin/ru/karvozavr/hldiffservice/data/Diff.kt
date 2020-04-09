@@ -7,5 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class Diff(
   @Id
   var id: String,
-  var data: String
+  var data: String,
+  var source: String?
 )

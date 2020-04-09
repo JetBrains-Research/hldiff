@@ -8,13 +8,13 @@ internal class DiffTest {
 
   @Test
   fun hasId() {
-    val diff = Diff("42", "data")
+    val diff = Diff("42", "data", null)
     assertEquals("42", diff.id, "Should have valid id")
   }
 
   @Test
   fun hasData() {
-    val diff = Diff("42", "data")
+    val diff = Diff("42", "data", null)
     assertEquals("data", diff.data, "Should have valid data")
   }
 }
