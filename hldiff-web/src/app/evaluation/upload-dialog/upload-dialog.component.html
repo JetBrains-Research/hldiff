@@ -22,7 +22,7 @@
     </mat-form-field>
 
     <button [disabled]="!isFormValid()"
-            type="submit" mat-raised-button color="primary" (click)="uploadDiff()">Upload
+            type="submit" mat-raised-button color="primary">Upload
     </button>
     <p>
       <mat-progress-bar *ngIf="isLoading"
