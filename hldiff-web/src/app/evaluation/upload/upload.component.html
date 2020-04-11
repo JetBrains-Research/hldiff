@@ -1,0 +1,20 @@
+<div id="uploadForm">
+  <div class="inputField">
+    <label>
+      Diff source:
+      <input #diffSourceInput id="diffSourceInput" type="text" (input)="diffSource = diffSourceInput.value">
+    </label>
+  </div>
+  <div>
+    <label>
+      Diff data:
+      <textarea
+        #diffDataInput
+        id="diffDataInput"
+        (input)="diffSource = diffDataInput.value"
+        rows="20"
+        cols="80"></textarea>
+    </label>
+  </div>
+  <button (click)="uploadDiff()">Upload</button>
+</div>

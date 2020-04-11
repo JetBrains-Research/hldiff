@@ -8,8 +8,8 @@ export class LoggerService {
   constructor() {
   }
 
-  log(message: string, obj: any = '') {
-    console.log(obj + message);
+  log(message: string) {
+    console.log(message);
   }
 
 }

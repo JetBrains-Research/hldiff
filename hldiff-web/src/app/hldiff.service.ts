@@ -123,15 +123,15 @@ export class HLDiffService {
     return of(this.diff);
   }
 
-  uploadDiff(diff: DiffData) {
-    this.http.post<DiffData>(environment.apiUrl + '/diff', diff, this.httpOptions).pipe(
+  uploadDiff(diff: DiffData): Observable<DiffData> {
+    return this.http.post<DiffData>(environment.apiUrl + '/diff', diff, this.httpOptions).pipe(
       tap(uploadedDiff => this.log(`Uploaded diff with id=${uploadedDiff.id}`)),
       catchError(this.handleError<DiffData>('uploadDiff'))
     );
   }
 
   private log(message: string) {
-    this.logger.log(message, this);
+    this.logger.log(`HLDiffService: ${message}`);
   }
 
   private handleError<T>(operation: string, result?: T) {
