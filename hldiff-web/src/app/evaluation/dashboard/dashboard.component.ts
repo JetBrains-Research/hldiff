@@ -4,10 +4,10 @@ import { UploadDialogComponent } from '../upload-dialog/upload-dialog.component'
 
 @Component({
   selector: 'app-upload',
-  templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.scss']
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
-export class UploadComponent implements OnInit {
+export class DashboardComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog) {

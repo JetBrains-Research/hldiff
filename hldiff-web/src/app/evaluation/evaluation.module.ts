@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UploadComponent } from './upload/upload.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,7 +13,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 @NgModule({
-  declarations: [UploadComponent, UploadDialogComponent],
+  declarations: [DashboardComponent, UploadDialogComponent],
   imports: [
     CommonModule,
     AppRoutingModule,
