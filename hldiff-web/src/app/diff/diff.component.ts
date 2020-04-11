@@ -14,7 +14,6 @@ import { Observable } from 'rxjs';
 export class DiffComponent implements OnInit, AfterViewInit {
 
   sourceCodeType = SourceCodeType;
-  diff: HLDiff;
   diff$: Observable<HLDiff>;
 
   constructor(private hldiffService: HLDiffService,
