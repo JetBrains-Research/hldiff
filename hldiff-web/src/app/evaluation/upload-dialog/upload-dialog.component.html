@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Upload Diff</h1>
+<div mat-dialog-content>
+  <form ngForm #uploadForm id="uploadForm" (ngSubmit)="uploadDiff()">
+    <mat-form-field class="full-width">
+      <mat-label>Diff source</mat-label>
+      <input matInput
+             #diffSourceInput
+             placeholder="Diff source (e.g. synthetic example or github commit url)"
+             (input)="diffSource = diffSourceInput.value"
+             [formControl]="diffSourceControl">
+      <mat-error *ngIf="diffSourceControl.invalid">This field is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Diff data</mat-label>
+      <textarea matInput
+                #diffDataInput
+                placeholder="Diff source"
+                (input)="diffData = diffDataInput.value"
+                [formControl]="diffDataControl"></textarea>
+      <mat-error *ngIf="diffDataControl.invalid">Data should be a valid JSON</mat-error>
+    </mat-form-field>
+
+    <button [disabled]="!isFormValid()"
+            type="submit" mat-raised-button color="primary" (click)="uploadDiff()">Upload
+    </button>
+    <p>
+      <mat-progress-bar *ngIf="isLoading"
+                        mode="indeterminate"></mat-progress-bar>
+    </p>
+    <p>
+      <span *ngIf="errorMessage" style="color: red">{{errorMessage}}</span>
+    </p>
+  </form>
+</div>

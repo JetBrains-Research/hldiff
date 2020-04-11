@@ -3,7 +3,7 @@ import { HLDiff } from './hldiff';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { catchError, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { LoggerService } from './logger.service';
 import { DiffData } from './diff-data';
 
@@ -125,8 +125,7 @@ export class HLDiffService {
 
   uploadDiff(diff: DiffData): Observable<DiffData> {
     return this.http.post<DiffData>(environment.apiUrl + '/diff', diff, this.httpOptions).pipe(
-      tap(uploadedDiff => this.log(`Uploaded diff with id=${uploadedDiff.id}`)),
-      catchError(this.handleError<DiffData>('uploadDiff'))
+      tap(uploadedDiff => this.log(`Uploaded diff with id=${uploadedDiff.id}`))
     );
   }
 

@@ -7,8 +7,8 @@ import { DiffComponent } from './diff/diff.component';
 import { SourceCodeComponent } from './source-code/source-code.component';
 import { CodeFragmentComponent } from './code-fragment/code-fragment.component';
 import { ChangeActionComponent } from './change-action/change-action.component';
-import { HLDiffService } from './hldiff.service';
 import { HttpClientModule } from '@angular/common/http';
+import { EvaluationModule } from './evaluation/evaluation.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     HttpClientModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    EvaluationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

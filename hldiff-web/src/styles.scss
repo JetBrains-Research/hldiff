@@ -11,3 +11,6 @@ $move-color: rgba(100, 149, 237, 0.5);
 $update-color: rgba(244, 164, 96, 0.5);
 $delete-color: rgba(255, 0, 0, 0.5);
 $line-color: rgb(0, 0, 0);
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

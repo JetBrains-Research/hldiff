@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HLDiffService } from '../../hldiff.service';
-import { DiffData } from '../../diff-data';
+import { MatDialog } from '@angular/material/dialog';
+import { UploadDialogComponent } from '../upload-dialog/upload-dialog.component';
 
 @Component({
   selector: 'app-upload',
@@ -9,17 +9,15 @@ import { DiffData } from '../../diff-data';
 })
 export class UploadComponent implements OnInit {
 
-  diffSource: string;
-  diffData: string;
 
-  constructor(private diffService: HLDiffService) {
+  constructor(public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
   }
 
-  uploadDiff() {
-    const diffData = { source: this.diffSource, data: this.diffData } as DiffData;
-    this.diffService.uploadDiff(diffData).subscribe();
+
+  openUploadDialog() {
+    this.dialog.open(UploadDialogComponent, { width: '750px', data: 'Add Diff' });
   }
 }
