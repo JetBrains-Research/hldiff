@@ -11,7 +11,7 @@
         </mat-card-title>
         <mat-card-content>
           <div class="dataset-container mat-elevation-z8">
-            <mat-table #table [dataSource]="diffDatasource">
+            <mat-table #table [dataSource]="diffDataSource">
               <ng-container matColumnDef="id">
                 <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
@@ -29,7 +29,7 @@
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
               <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
             </mat-table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons></mat-paginator>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
           </div>
         </mat-card-content>
       </mat-card>

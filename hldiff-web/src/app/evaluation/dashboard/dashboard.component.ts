@@ -1,60 +1,44 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadDialogComponent } from '../upload-dialog/upload-dialog.component';
 import { Observable } from 'rxjs';
 import { DiffData } from '../../diff-data';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { DiffDataSource } from '../diff-data-source';
+import { HLDiffService } from '../../hldiff.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
 
   private diffs$: Observable<DiffData>;
 
-  diffDatasource = new MatTableDataSource([
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData,
-    { id: '123', data: '{"Hello": "World"}', source: 'github' } as DiffData
-  ]);
+  diffDataSource: DiffDataSource;
 
   displayedColumns = ['id', 'source', 'open'];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog,
+              private diffService: HLDiffService) {
   }
 
   ngOnInit(): void {
-    this.diffDatasource.paginator = this.paginator;
+    this.diffDataSource = new DiffDataSource(this.diffService);
+    this.diffDataSource.loadDiffs();
   }
 
+  ngAfterViewInit() {
+    this.paginator.page
+      .pipe(
+        tap(() => this.loadDiffPage())
+      ).subscribe();
+  }
 
   openUploadDialog() {
     this.dialog.open(UploadDialogComponent, { width: '750px', data: 'Add Diff' });
@@ -62,5 +46,9 @@ export class DashboardComponent implements OnInit {
 
   openVisualization(element: DiffData) {
     window.open(`/diff/${element.id}`);
+  }
+
+  private loadDiffPage() {
+    this.diffDataSource.loadDiffs(this.paginator.pageIndex, this.paginator.pageSize);
   }
 }

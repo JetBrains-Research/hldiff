@@ -129,6 +129,12 @@ export class HLDiffService {
     );
   }
 
+  findDiffs(pageIndex: number, pageSize: number): Observable<DiffData[]> {
+    return this.http.get<DiffData[]>(environment.apiUrl + '/diff').pipe(
+      tap(diffs => this.log(`Fetched ${diffs.length} diffs`))
+    );
+  }
+
   private log(message: string) {
     this.logger.log(`HLDiffService: ${message}`);
   }
