@@ -1,0 +1,13 @@
+.dataset-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+}
+
+.card {
+  min-width: 80%;
+}
+
+.mat-table {
+  overflow: auto;
+}

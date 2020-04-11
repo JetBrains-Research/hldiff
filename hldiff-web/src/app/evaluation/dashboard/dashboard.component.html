@@ -1,2 +1,38 @@
 <button mat-raised-button color="primary"
-  (click)="openUploadDialog()">Upload diff</button>
+        (click)="openUploadDialog()">Upload diff
+</button>
+<div>
+  <br>
+  <div class="container">
+    <div fxLayout="row" fxLayoutAlign="center center" class="content">
+      <mat-card class="card">
+        <mat-card-title fxLayout.gt-xs="row" fxLayout="column">
+          <h3>HLDiff dataset</h3>
+        </mat-card-title>
+        <mat-card-content>
+          <div class="dataset-container mat-elevation-z8">
+            <mat-table #table [dataSource]="diffDatasource">
+              <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="source">
+                <mat-header-cell *matHeaderCellDef>Source</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.source}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="open">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <button mat-button color="primary" (click)="openVisualization(element)">open visualization</button>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons></mat-paginator>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

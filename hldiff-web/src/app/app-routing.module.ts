@@ -5,8 +5,8 @@ import { DashboardComponent } from './evaluation/dashboard/dashboard.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/diff', pathMatch: 'full' },
-  { path: 'diff', component: DiffComponent },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'diff/:id', component: DiffComponent },
   { path: 'dashboard', component: DashboardComponent },
 ];
 
