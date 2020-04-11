@@ -6,8 +6,6 @@ export function jsonValidator(): ValidatorFn {
 
     try {
       JSON.parse(control.value);
-      console.log('valid');
-      console.log(control.value);
     } catch (e) {
       control.setErrors(error, { emitEvent: false });
       return error;
