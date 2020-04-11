@@ -29,6 +29,7 @@ export class UploadDialogComponent implements OnInit {
   }
 
   uploadDiff() {
+    this.errorMessage = '';
     this.isLoading = true;
     const diffData = { source: this.diffSource, data: this.diffData } as DiffData;
     const uploadedDiff$ = this.diffService.uploadDiff(diffData);
