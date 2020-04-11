@@ -11,20 +11,13 @@
 
 
 <div class="wrapper">
-  <app-source-code [diff]="diff" [type]="sourceCodeType.BEFORE_CHANGES"></app-source-code>
-  <!--
-    <div class="diff">
-      <div class="change change-update" id="code-change-3">Update MethodInvocation with
-        INS SimpleName: decorated to MethodInvocation at 1
-      </div>
-      <div class="change change-addition" id="code-change-1">Insert VariableDeclarationStatement Partial to Block at position 0</div><div class="change change-move" id="code-change-0">Move MethodInvocation to VariableDeclarationFragment at position 1</div><div class="change change-addition" id="code-change-2">Insert IfStatement to Block at position 1</div>
-    </div>-->
+  <app-source-code [diff]="diff$ | async" [type]="sourceCodeType.BEFORE_CHANGES"></app-source-code>
 
   <div class="diff">
-    <app-change-action *ngFor="let change of diff.highLevelActions" [change]="change"></app-change-action>
+    <app-change-action *ngFor="let change of (diff$ | async).highLevelActions" [change]="change"></app-change-action>
   </div>
 
-  <app-source-code [diff]="diff" [type]="sourceCodeType.AFTER_CHANGES"></app-source-code>
+  <app-source-code [diff]="diff$ | async" [type]="sourceCodeType.AFTER_CHANGES"></app-source-code>
 
   <script type="text/javascript">
     function drawLine(start, end, line, color = 'rgb(0, 0, 0)') {

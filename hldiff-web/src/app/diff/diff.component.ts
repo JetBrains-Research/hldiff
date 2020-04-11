@@ -2,6 +2,9 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { HLDiffService } from '../hldiff.service';
 import { HLDiff } from '../hldiff';
 import { SourceCodeType } from '../source-code/source-code-type';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-diff',
@@ -12,17 +15,16 @@ export class DiffComponent implements OnInit, AfterViewInit {
 
   sourceCodeType = SourceCodeType;
   diff: HLDiff;
+  diff$: Observable<HLDiff>;
 
-  private hldiffService: HLDiffService;
-
-  constructor(hldiffService: HLDiffService) {
-    this.hldiffService = hldiffService;
+  constructor(private hldiffService: HLDiffService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.hldiffService.getDiffById('42').subscribe(hldiff => {
-      this.diff = hldiff;
-    });
+    this.diff$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => this.hldiffService.getDiffById(params.get('id')))
+    );
   }
 
   ngAfterViewInit(): void {
