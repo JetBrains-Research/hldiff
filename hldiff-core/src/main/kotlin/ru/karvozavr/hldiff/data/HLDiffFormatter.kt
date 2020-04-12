@@ -2,6 +2,7 @@ package ru.karvozavr.hldiff.data
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
+import ru.karvozavr.hldiff.actions.UpdateAction
 
 class HLDiffFormatter(private val hldiff: HighLevelDiff, private val codeBefore: String, private val codeAfter: String) {
 
@@ -13,7 +14,7 @@ class HLDiffFormatter(private val hldiff: HighLevelDiff, private val codeBefore:
                     nodeId = it.node.id,
                     name = it.format(hldiff.treeAfter, codeBefore, codeAfter),
                     type = it.getActionType(),
-                    groupedActions = emptyList(), // TODO get grouped actions
+                    groupedActions = if (it is UpdateAction) it.actions.map { it.format(hldiff.treeAfter) } else emptyList(),
                     startPosition = it.node.pos,
                     endPosition = it.node.endPos,
                     startPositionAfter = hldiff.mappings.getDst(it.node)?.pos ?: it.node.pos,
