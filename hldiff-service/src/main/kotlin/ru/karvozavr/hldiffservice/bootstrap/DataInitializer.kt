@@ -17,7 +17,7 @@ class DataInitializer(
   override fun onApplicationEvent(event: ContextRefreshedEvent) {
     logger.info("Initializing data.")
 
-    val data = Diff("test_data_id_0001", "{\"data\": \"XYZ\"}", null)
+    val data = Diff("test_data_id_0001", "{\"data\": \"XYZ\"}", null, mutableListOf())
     diffRepository.save(data).subscribe()
   }
 }

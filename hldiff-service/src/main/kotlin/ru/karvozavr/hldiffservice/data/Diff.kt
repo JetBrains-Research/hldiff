@@ -8,5 +8,6 @@ data class Diff(
   @Id
   var id: String?,
   var data: String,
-  var source: String?
+  var source: String?,
+  var reviews: MutableList<String>
 )
