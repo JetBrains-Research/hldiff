@@ -1,15 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { HLDiff } from '../../hldiff';
 import { SourceCodeType } from './source-code-type';
 import { Change } from '../../change';
 import { CodeFragment } from '../../code-fragment';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-source-code',
   templateUrl: './source-code.component.html',
   styleUrls: ['./source-code.component.scss']
 })
-export class SourceCodeComponent implements OnInit {
+export class SourceCodeComponent implements OnInit, OnChanges {
 
   @Input()
   diff: HLDiff;
@@ -31,17 +32,23 @@ export class SourceCodeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const src = this.type === SourceCodeType.BEFORE_CHANGES
-      ? this.diff.srcBefore
-      : this.diff.srcAfter;
+  }
 
-    const changes = this.type === SourceCodeType.BEFORE_CHANGES
-      ? this.diff.highLevelActions
-        .filter(change => ['update', 'delete', 'move'].lastIndexOf(change.type) >= 0)
-        .sort((a, b) => a.startPosition - b.startPosition)
-      : this.diff.highLevelActions
-        .filter(change => ['update', 'add', 'move'].lastIndexOf(change.type) >= 0)
-        .sort((a, b) => a.startPositionAfter - b.startPositionAfter);
+  ngOnChanges(changes: SimpleChanges): void {
+    this.onDataLoaded(this.diff);
+  }
+
+  private onDataLoaded(diff: HLDiff) {
+    const src = this.type === SourceCodeType.BEFORE_CHANGES
+      ? diff.srcBefore
+      : diff.srcAfter;
+    console.log(this.type === SourceCodeType.BEFORE_CHANGES ? 'BEFORE' : 'AFTER');
+    const changes = (this.type === SourceCodeType.BEFORE_CHANGES
+        ? diff.highLevelActions
+          .filter(change => ['update', 'delete', 'move'].lastIndexOf(change.type) >= 0)
+        : diff.highLevelActions
+          .filter(change => ['update', 'add', 'move'].lastIndexOf(change.type) >= 0)
+    ).sort(this.changeCompareFunction());
 
     this.rootCodeFragment = ({ children: [], startPosition: 0, endPosition: src.length } as CodeFragment);
     const [changeIdx, lastPosition] = this.buildCodeFragmentsRecursive(this.rootCodeFragment, 0, 0, changes, src);
@@ -56,6 +63,13 @@ export class SourceCodeComponent implements OnInit {
 
     console.log(changes.length);
     console.assert(changeIdx === changes.length, 'ChangeId after tree build should be changes.length');
+  }
+
+  private changeCompareFunction() {
+    return (a, b) => {
+      const delta = this.getStartPosition(a) - this.getStartPosition(b);
+      return delta === 0 ? this.getEndPosition(b) - this.getEndPosition(a) : delta;
+    };
   }
 
   /**
@@ -122,5 +136,4 @@ export class SourceCodeComponent implements OnInit {
 
     return [currentChange, lastPosition];
   }
-
 }

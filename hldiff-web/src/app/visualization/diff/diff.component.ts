@@ -15,6 +15,7 @@ export class DiffComponent implements OnInit, AfterViewInit {
 
   sourceCodeType = SourceCodeType;
   diff$: Observable<HLDiff>;
+  diff: HLDiff;
 
   constructor(private hldiffService: HLDiffService,
               private route: ActivatedRoute) {
@@ -24,16 +25,22 @@ export class DiffComponent implements OnInit, AfterViewInit {
     this.diff$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => this.hldiffService.getDiffById(params.get('id')))
     );
+    this.diff$.subscribe(value => {
+      this.diff = value;
+      setTimeout(() => {
+        const changesList = document.getElementsByClassName('change');
+        this.positionChanges(changesList);
+        console.log('Positioned');
+      }, 0);
+    });
   }
 
   ngAfterViewInit(): void {
     const changedCode = document.getElementsByClassName('changed-code');
-    const changesList = document.getElementsByClassName('change');
+
 
     const line = document.getElementById('line');
-    const line2 = document.getElementById('line2');
 
-    this.positionChanges(changesList);
     this.setChangedCodeListeners(changedCode, line);
   }
 

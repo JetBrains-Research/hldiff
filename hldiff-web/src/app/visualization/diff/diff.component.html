@@ -11,15 +11,15 @@
 
 
 <div class="wrapper">
-  <app-source-code [diff]="diff$ | async" [type]="sourceCodeType.BEFORE_CHANGES"></app-source-code>
+  <app-source-code *ngIf="diff" [diff]="diff" [type]="sourceCodeType.BEFORE_CHANGES"></app-source-code>
 
   <div class="diff">
-    <app-change-action *ngFor="let change of (diff$ | async).highLevelActions" [change]="change"></app-change-action>
+    <app-change-action *ngFor="let change of diff.highLevelActions" [change]="change"></app-change-action>
   </div>
 
-  <app-source-code [diff]="diff$ | async" [type]="sourceCodeType.AFTER_CHANGES"></app-source-code>
+  <app-source-code *ngIf="diff" [diff]="diff" [type]="sourceCodeType.AFTER_CHANGES"></app-source-code>
 
-  <script type="text/javascript">
+  <!--<script type="text/javascript">
     function drawLine(start, end, line, color = 'rgb(0, 0, 0)') {
       let x1 = start.getBoundingClientRect().left;
       let y1 = start.offsetTop + start.getBoundingClientRect().height / 2;
@@ -32,7 +32,7 @@
         x2 += end.clientWidth;
       }
 
-      document.documentElement.style.setProperty('--line-color', setAlpha(color, 1));
+      document.documentElement.style.setProperty('&#45;&#45;line-color', setAlpha(color, 1));
       line.setAttribute('x1', x1);
       line.setAttribute('y1', y1);
       line.setAttribute('x2', x2);
@@ -74,15 +74,15 @@
           }
 
           if (elem.className.includes('change-addition')) {
-            drawLine(codeChanges[0], elem, line, 'var(--add-color)');
+            drawLine(codeChanges[0], elem, line, 'var(&#45;&#45;add-color)');
           } else if (elem.className.includes('change-move')) {
-            drawLine(codeChanges[0], elem, line, 'var(--move-color)');
-            drawLine(codeChanges[1], elem, line2, 'var(--move-color)');
+            drawLine(codeChanges[0], elem, line, 'var(&#45;&#45;move-color)');
+            drawLine(codeChanges[1], elem, line2, 'var(&#45;&#45;move-color)');
           } else if (elem.className.includes('change-delete')) {
-            drawLine(codeChanges[0], elem, line, 'var(--delete-color)');
+            drawLine(codeChanges[0], elem, line, 'var(&#45;&#45;delete-color)');
           } else if (elem.className.includes('change-update')) {
-            drawLine(codeChanges[0], elem, line, 'var(--update-color)');
-            drawLine(codeChanges[1], elem, line2, 'var(--update-color)');
+            drawLine(codeChanges[0], elem, line, 'var(&#45;&#45;update-color)');
+            drawLine(codeChanges[1], elem, line2, 'var(&#45;&#45;update-color)');
           }
         });
 
@@ -124,5 +124,5 @@
     positionChanges(changesList, changedCode);
     setChangedCodeListeners(changedCode, line);
     setChangesListListeners(changesList, line, line2);
-  </script>
+  </script>-->
 </div>
