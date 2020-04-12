@@ -3,7 +3,6 @@ import { HLDiff } from '../../hldiff';
 import { SourceCodeType } from './source-code-type';
 import { Change } from '../../change';
 import { CodeFragment } from '../../code-fragment';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-source-code',
@@ -90,7 +89,7 @@ export class SourceCodeComponent implements OnInit, OnChanges {
       const startPosition = this.getStartPosition(change);
       const endPosition = this.getEndPosition(change);
 
-      if (endPosition < root.endPosition) {
+      if (endPosition <= root.endPosition) {
         // Add source code fragment before this change
         if (lastPosition < startPosition) {
           root.children.push({
