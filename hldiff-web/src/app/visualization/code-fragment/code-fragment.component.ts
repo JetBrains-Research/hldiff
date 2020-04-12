@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CodeFragment } from '../code-fragment';
+import { CodeFragment } from '../../code-fragment';
 
 @Component({
   selector: 'app-code-fragment',

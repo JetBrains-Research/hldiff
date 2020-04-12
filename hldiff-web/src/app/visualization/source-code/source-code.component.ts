@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { HLDiff } from '../hldiff';
+import { HLDiff } from '../../hldiff';
 import { SourceCodeType } from './source-code-type';
-import { Change } from '../change';
-import { CodeFragment } from '../code-fragment';
+import { Change } from '../../change';
+import { CodeFragment } from '../../code-fragment';
 
 @Component({
   selector: 'app-source-code',

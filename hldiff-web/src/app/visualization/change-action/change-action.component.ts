@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { Change } from '../change';
-import { drawLine, setAlpha } from '../draw-utils';
+import { Change } from '../../change';
+import { drawLine, setAlpha } from '../../draw-utils';
 
 @Component({
   selector: 'app-change-action',

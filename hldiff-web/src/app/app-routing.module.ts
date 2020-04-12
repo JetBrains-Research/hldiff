@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DiffComponent } from './diff/diff.component';
+import { DiffComponent } from './visualization/diff/diff.component';
 import { DashboardComponent } from './evaluation/dashboard/dashboard.component';
 
 
