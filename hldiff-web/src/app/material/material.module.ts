@@ -12,7 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -32,6 +32,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatTableModule,
     MatPaginatorModule,
     MatToolbarModule,
+    MatIconModule,
   ],
   exports: [
     BrowserAnimationsModule,
@@ -47,6 +48,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatTableModule,
     MatPaginatorModule,
     MatToolbarModule,
+    MatIconModule,
   ]
 })
-export class MaterialModule { }
+export class MaterialModule {
+}

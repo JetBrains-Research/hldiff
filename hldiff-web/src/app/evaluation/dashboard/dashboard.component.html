@@ -1,6 +1,3 @@
-<button mat-raised-button color="primary"
-        (click)="openUploadDialog()">Upload diff
-</button>
 <div>
   <br>
   <div class="container">
@@ -10,6 +7,12 @@
           <h3>HLDiff dataset</h3>
         </mat-card-title>
         <mat-card-content>
+          <div class="dataset-actions">
+            <button mat-raised-button color="primary"
+                    (click)="openUploadDialog()">
+              + Upload Diff
+            </button>
+          </div>
           <div class="dataset-container mat-elevation-z8">
             <mat-table #table [dataSource]="diffDataSource">
               <ng-container matColumnDef="id">
