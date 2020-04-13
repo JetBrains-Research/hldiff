@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserDto } from './user-dto';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { User } from './user';
 
 @Injectable({
@@ -16,15 +16,20 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
   }
 
-  authenticate(username: string, password: string): Observable<UserDto> {
+  authenticate(username: string, password: string): Observable<User> {
     return this.http.post<UserDto>(`${environment.apiUrl}/user/authenticate`, { username, password } as UserDto).pipe(
       tap(user => {
         if (user) {
           user.authdata = window.btoa(user.username + ':' + user.password);
           sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
         }
-      })
+      }),
+      map(user => user as UserDto)
     );
+  }
+
+  register(username: string, password: string): Observable<User> {
+    return this.http.post<UserDto>(`${environment.apiUrl}/user/register`, { username, password } as UserDto);
   }
 
   isUserLoggedIn(): boolean {
