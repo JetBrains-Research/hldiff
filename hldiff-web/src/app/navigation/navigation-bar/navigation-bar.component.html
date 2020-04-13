@@ -7,8 +7,8 @@
         <mat-icon>account_circle</mat-icon>
         {{authenticationService.getUserName()}}
       </a>
-      <a *ngIf="!authenticationService.isUserLoggedIn()" mat-button routerLink="/login">Login</a>
-      <a *ngIf="authenticationService.isUserLoggedIn()" mat-button routerLink="/logout">Logout</a>
+      <button *ngIf="!authenticationService.isUserLoggedIn()" mat-button (click)="openLoginDialog()">Login</button>
+      <a *ngIf="authenticationService.isUserLoggedIn()" mat-button (click)="logout()">Logout</a>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

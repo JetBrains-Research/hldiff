@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { EvaluationModule } from './evaluation/evaluation.module';
 import { VisualizationModule } from './visualization/visualization.module';
 import { NavigationModule } from './navigation/navigation.module';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { NavigationModule } from './navigation/navigation.module';
     EvaluationModule,
     VisualizationModule,
     NavigationModule,
+    UsersModule
   ],
   providers: [],
   bootstrap: [AppComponent]
