@@ -3,9 +3,9 @@
     <span>HLDiff Evaluation Tool</span>
     <span class="menu-spacer"></span>
     <div class="nav-bar">
-      <a *ngIf="authenticationService.isUserLoggedIn()" mat-button routerLink="/logout">
+      <a *ngIf="authenticationService.isUserLoggedIn()" mat-button>
         <mat-icon>account_circle</mat-icon>
-        {{authenticationService.getUserName()}}
+        {{authenticationService.getUser().username}}
       </a>
       <button *ngIf="!authenticationService.isUserLoggedIn()" mat-button (click)="openLoginDialog()">Login</button>
       <a *ngIf="authenticationService.isUserLoggedIn()" mat-button (click)="logout()">Logout</a>

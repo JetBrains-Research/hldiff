@@ -27,10 +27,9 @@ export class LoginDialogComponent implements OnInit {
   submit() {
     this.error = null;
     const result = this.authenticationService.authenticate(this.form.controls.username.value, this.form.controls.password.value);
-    if (result) {
-      this.dialogRef.close();
-    } else {
-      this.error = 'Wrong username or password';
-    }
+    result.subscribe(
+      _ => this.dialogRef.close(),
+      _ => this.error = 'Wrong username or password'
+    );
   }
 }
