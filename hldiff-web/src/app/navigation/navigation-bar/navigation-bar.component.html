@@ -1,10 +1,14 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-  <span>HLDiff Evaluation Tool</span>
-  <span class="menu-spacer"></span>
-  <div class="nav-bar">
-    <a mat-button routerLink="/login">Login</a>
-    <a mat-button routerLink="/logout">Logout</a>
-  </div>
+    <span>HLDiff Evaluation Tool</span>
+    <span class="menu-spacer"></span>
+    <div class="nav-bar">
+      <a *ngIf="authenticationService.isUserLoggedIn()" mat-button routerLink="/logout">
+        <mat-icon>account_circle</mat-icon>
+        {{authenticationService.getUserName()}}
+      </a>
+      <a *ngIf="!authenticationService.isUserLoggedIn()" mat-button routerLink="/login">Login</a>
+      <a *ngIf="authenticationService.isUserLoggedIn()" mat-button routerLink="/logout">Logout</a>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>
