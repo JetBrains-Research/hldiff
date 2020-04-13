@@ -41,6 +41,6 @@ export class AuthenticationService {
   }
 
   logout() {
-    sessionStorage.removeItem('username');
+    sessionStorage.removeItem(this.USER_KEY);
   }
 }
