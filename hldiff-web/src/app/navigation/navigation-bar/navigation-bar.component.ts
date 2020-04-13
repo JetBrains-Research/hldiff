@@ -10,7 +10,7 @@ import { LoginDialogComponent } from '../../users/login-dialog/login-dialog.comp
 })
 export class NavigationBarComponent implements OnInit {
 
-  constructor(private authenticationService: AuthenticationService,
+  constructor(public authenticationService: AuthenticationService,
               private dialog: MatDialog) {
   }
 
