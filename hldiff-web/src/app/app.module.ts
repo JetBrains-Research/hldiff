@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EvaluationModule } from './evaluation/evaluation.module';
 import { VisualizationModule } from './visualization/visualization.module';
+import { NavigationModule } from './navigation/navigation.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { VisualizationModule } from './visualization/visualization.module';
     AppRoutingModule,
     EvaluationModule,
     VisualizationModule,
+    NavigationModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

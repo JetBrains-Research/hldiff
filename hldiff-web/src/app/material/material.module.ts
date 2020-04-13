@@ -11,6 +11,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 
@@ -29,7 +30,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     FlexLayoutModule,
     MatCardModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatToolbarModule,
   ],
   exports: [
     BrowserAnimationsModule,
@@ -43,7 +45,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     FlexLayoutModule,
     MatCardModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatToolbarModule,
   ]
 })
 export class MaterialModule { }
