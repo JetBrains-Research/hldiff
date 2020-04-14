@@ -7,7 +7,10 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AuthenticationService } from '../../users/authentication.service';
 import { switchMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { ActionEvaluationDialogComponent } from '../action-evaluation-dialog/action-evaluation-dialog.component';
+import { ActionEvaluationDialogComponent, EvalDialogData } from '../action-evaluation-dialog/action-evaluation-dialog.component';
+import { Change } from '../../change';
+import { ChangeActionEvaluation, Evaluation } from '../evaluation';
+import { EvaluationService } from '../evaluation.service';
 
 @Component({
   selector: 'app-diff-evaluation',
@@ -20,9 +23,14 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
   diff$: Observable<HLDiff>;
   diff: HLDiff;
 
+  canSubmit = false;
+
+  changeActionsEvaluations: Map<number, ChangeActionEvaluation> = new Map<number, ChangeActionEvaluation>();
+  comment: string;
+
   constructor(private hldiffService: HLDiffService,
               private route: ActivatedRoute,
-              private authenticationService: AuthenticationService,
+              private evaluationService: EvaluationService,
               private dialog: MatDialog) {
   }
 
@@ -35,7 +43,6 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
       setTimeout(() => {
         const changesList = document.getElementsByClassName('change');
         this.positionChanges(changesList);
-        console.log('Positioned');
       }, 0);
     });
   }
@@ -70,10 +77,37 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
   }
 
   submitEvaluation() {
+    const evaluation = {
+      diffId: this.diff.id,
+      actions: Array.from(this.changeActionsEvaluations.values()),
+      comment: this.comment,
+    } as Evaluation;
 
+    this.evaluationService.submitEvaluation(evaluation).subscribe(
+      success => {
+      }
+    );
   }
 
-  openActionEvaluationDialog() {
-    this.dialog.open(ActionEvaluationDialogComponent, { width: '750px' });
+  openActionEvaluationDialog(change: Change) {
+    const changeEval = this.changeActionsEvaluations.get(change.id) || {} as ChangeActionEvaluation;
+    console.log(changeEval);
+    const dialogRef = this.dialog.open(ActionEvaluationDialogComponent, {
+      width: '750px',
+      data: { qualityValue: changeEval.qualityValue, comment: changeEval.comment } as EvalDialogData
+    });
+    dialogRef.afterClosed().subscribe((result: EvalDialogData) => {
+      if (result && result.qualityValue !== null) {
+        this.changeActionsEvaluations.set(change.id, {
+          actionID: change.id,
+          comment: result.comment,
+          qualityValue: result.qualityValue
+        } as ChangeActionEvaluation);
+        console.log(this.changeActionsEvaluations);
+        console.log(this.changeActionsEvaluations.size);
+        console.log(this.diff.highLevelActions.length);
+        this.canSubmit = this.changeActionsEvaluations.size === this.diff.highLevelActions.length;
+      }
+    });
   }
 }

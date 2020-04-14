@@ -4,6 +4,16 @@
   Tips on the evaluation
 </p>
 
+<div fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="card">
+    <mat-form-field class="full-width">
+      <textarea matInput placeholder="Overall comment" [(ngModel)]="comment"></textarea>
+    </mat-form-field>
+    <button [disabled]="!canSubmit" mat-raised-button color="accent" (submit)="submitEvaluation()">Submit Evaluation</button>
+    <p *ngIf="!canSubmit" style="color: red">You have to score all the change actions before submit.</p>
+  </mat-card>
+</div>
+
 <svg id="svg" class="svg" xmlns="http://www.w3.org/2000/svg">
   <line id="line" class="line"></line>
 </svg>
@@ -19,11 +29,10 @@
   <div class="diff">
     <app-change-action *ngFor="let change of diff.highLevelActions"
                        [change]="change"
-                       [checked]="true"
-                       (click)="openActionEvaluationDialog()"></app-change-action>
+                       [checked]="changeActionsEvaluations.has(change.id)"
+                       (click)="openActionEvaluationDialog(change)"></app-change-action>
   </div>
 
   <app-source-code *ngIf="diff" [diff]="diff" [type]="sourceCodeType.AFTER_CHANGES"></app-source-code>
 </div>
 
-<button mat-raised-button color="accent" (submit)="submitEvaluation()">Submit Evaluation</button>
