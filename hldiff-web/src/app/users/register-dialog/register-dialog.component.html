@@ -1,14 +1,16 @@
-<h1 mat-dialog-title>Login</h1>
+<h1 mat-dialog-title>Register</h1>
 <form [formGroup]="form" (ngSubmit)="submit()">
   <p>
     <mat-form-field>
       <input type="text" matInput placeholder="Username" formControlName="username">
+      <mat-error *ngIf="!form.controls.username.valid">{{form.controls.username.errors}}</mat-error>
     </mat-form-field>
   </p>
 
   <p>
     <mat-form-field>
       <input type="password" matInput placeholder="Password" formControlName="password">
+      <mat-error *ngIf="!form.controls.password.valid">{{form.controls.password.errors}}</mat-error>
     </mat-form-field>
   </p>
 
@@ -17,7 +19,7 @@
   </p>
 
   <div class="button">
-    <button type="submit" [disabled]="!form.valid" mat-button>Login</button>
+    <button type="submit" mat-button>Register</button>
   </div>
 
 </form>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../users/authentication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../../users/login-dialog/login-dialog.component';
+import { RegisterDialogComponent } from '../../users/register-dialog/register-dialog.component';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -23,5 +24,9 @@ export class NavigationBarComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
+  }
+
+  openRegisterDialog() {
+    this.dialog.open(RegisterDialogComponent, { width: '400px' });
   }
 }

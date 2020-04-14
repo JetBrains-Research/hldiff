@@ -8,7 +8,8 @@
         {{authenticationService.getUser().username}}
       </a>
       <button *ngIf="!authenticationService.isUserLoggedIn()" mat-button (click)="openLoginDialog()">Login</button>
-      <a *ngIf="authenticationService.isUserLoggedIn()" mat-button (click)="logout()">Logout</a>
+      <button *ngIf="!authenticationService.isUserLoggedIn()" mat-button (click)="openRegisterDialog()">Register</button>
+      <button *ngIf="authenticationService.isUserLoggedIn()" mat-button (click)="logout()">Logout</button>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

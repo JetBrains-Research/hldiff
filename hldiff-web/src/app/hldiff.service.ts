@@ -3,7 +3,7 @@ import { HLDiff } from './hldiff';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { map, mapTo, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { LoggerService } from './logger.service';
 import { DiffData } from './diff-data';
 
@@ -13,7 +13,8 @@ import { DiffData } from './diff-data';
 export class HLDiffService {
 
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    'Access-Control-Allow-Origin': '*',
   };
 
   constructor(private http: HttpClient,
