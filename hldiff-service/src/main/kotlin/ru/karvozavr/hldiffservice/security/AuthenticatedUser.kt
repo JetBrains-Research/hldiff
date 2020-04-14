@@ -9,7 +9,6 @@ import kotlin.streams.toList
 
 
 class AuthenticatedUser(
-  private val id: String,
   private val username: String,
   @JsonIgnore private val password: String,
   private val authorities: MutableCollection<out GrantedAuthority>
@@ -21,7 +20,7 @@ class AuthenticatedUser(
         .map { role -> SimpleGrantedAuthority(role.name) }
         .toList().toMutableList()
 
-      return AuthenticatedUser(user.id!!, user.username, user.password, authorities)
+      return AuthenticatedUser(user.username, user.password, authorities)
     }
   }
 
@@ -56,10 +55,10 @@ class AuthenticatedUser(
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (other === null || this::class != other::class) return false;
-    return id == (other as? AuthenticatedUser)?.id
+    return username == (other as? AuthenticatedUser)?.username
   }
 
   override fun hashCode(): Int {
-    return id.hashCode()
+    return username.hashCode()
   }
 }

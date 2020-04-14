@@ -6,8 +6,9 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import ru.karvozavr.hldiffservice.data.Diff
 import ru.karvozavr.hldiffservice.data.DiffRepository
+import java.security.Principal
 
-@CrossOrigin
+@CrossOrigin(origins = ["*"])
 @RestController
 class DiffController(private val diffRepository: DiffRepository) {
 
@@ -17,14 +18,15 @@ class DiffController(private val diffRepository: DiffRepository) {
     return diffRepository.findById(id)
   }
 
+  @CrossOrigin(origins = ["*"])
   @PreAuthorize("hasRole('USER')")
   @GetMapping("/diff")
-  fun getAllDiffs(): Flux<Diff> {
+  fun getAllDiffs(principal: Mono<Principal>): Flux<Diff> {
     return diffRepository.findAll()
   }
 
   @PostMapping("/diff")
-  fun uploadDiff(@RequestBody diff: Diff): Mono<Diff> {
+  fun uploadDiff(@RequestBody diff: Diff, principal: Mono<Principal>): Mono<Diff> {
     return diffRepository.save(diff)
   }
 }
