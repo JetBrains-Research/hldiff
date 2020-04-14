@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>Evaluate this change action</h1>
+
+<form [formGroup]="form" id="evalForm" (ngSubmit)="submit()">
+  <label id="eval-radio-group-label">How do you evaluate this change grouping</label>
+
+  <ul>
+    <li><p><i>Well-done:</i> Comprehensive and reasonable change</p></li>
+    <li><p><i>Good:</i> Comprehensive and overall good, but something is missing or better to be extracted to another
+      change </p></li>
+    <li><p><i>Ok:</i> The change is reasonable, but it shoud be grouped with some other
+      or divided into several different changes</p></li>
+    <li><p><i>Bad:</i> The change is incorrect / It did not occur / It have to be part
+      of another change or divided into several different changes</p></li>
+  </ul>
+
+  <mat-radio-group [(ngModel)]="selectedModel"
+                   aria-labelledby="eval-radio-group-label"
+                   class="radio-group">
+    <mat-radio-button value="best" class="radio-button" checked>Well-done</mat-radio-button>
+    <mat-radio-button value="good" class="radio-button">Good</mat-radio-button>
+    <mat-radio-button value="ok" class="radio-button">Ok</mat-radio-button>
+    <mat-radio-button value="bad" class="radio-button">Bad</mat-radio-button>
+  </mat-radio-group>
+
+  <mat-form-field class="full-width">
+    <mat-label>Comment</mat-label>
+    <textarea matInput placeholder="Comment" formControlName="comment"></textarea>
+  </mat-form-field>
+
+  <p *ngIf="error" class="error">
+    {{ error }}
+  </p>
+
+  <button mat-raised-button type="submit" [disabled]="!form.valid" color="primary">Save</button>
+
+</form>

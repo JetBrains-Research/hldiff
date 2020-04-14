@@ -1,0 +1,19 @@
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.radio-button {
+  margin: 5px;
+  white-space: normal;
+}
+
+.full-width {
+  width: 100%;
+}
+
+#evalForm {
+  min-width: 250px;
+  width: 100%;
+}

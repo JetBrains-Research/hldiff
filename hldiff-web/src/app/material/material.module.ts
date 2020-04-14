@@ -14,6 +14,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatRadioModule } from '@angular/material/radio';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatToolbarModule,
     MatIconModule,
     MatBadgeModule,
+    MatRadioModule,
   ],
   exports: [
     BrowserAnimationsModule,
@@ -52,6 +54,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatToolbarModule,
     MatIconModule,
     MatBadgeModule,
+    MatRadioModule,
   ]
 })
 export class MaterialModule {

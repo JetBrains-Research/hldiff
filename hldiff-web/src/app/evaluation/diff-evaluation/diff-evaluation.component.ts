@@ -6,6 +6,8 @@ import { HLDiffService } from '../../hldiff.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AuthenticationService } from '../../users/authentication.service';
 import { switchMap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { ActionEvaluationDialogComponent } from '../action-evaluation-dialog/action-evaluation-dialog.component';
 
 @Component({
   selector: 'app-diff-evaluation',
@@ -20,7 +22,8 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
 
   constructor(private hldiffService: HLDiffService,
               private route: ActivatedRoute,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -53,8 +56,6 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
 
         const start = elem;
         const end = document.getElementById(changeId);
-
-        // this.drawLine(start, end, line);
       });
     }
   }
@@ -73,6 +74,6 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
   }
 
   openActionEvaluationDialog() {
-
+    this.dialog.open(ActionEvaluationDialogComponent, { width: '750px' });
   }
 }
