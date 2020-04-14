@@ -66,4 +66,7 @@ export class DiffComponent implements OnInit, AfterViewInit {
     }
   }
 
+  openEvaluation() {
+    window.open(`/diff/evaluation/${this.diff.id}`);
+  }
 }
