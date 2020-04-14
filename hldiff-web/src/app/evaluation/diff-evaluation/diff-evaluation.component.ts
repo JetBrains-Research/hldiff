@@ -68,4 +68,11 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
     }
   }
 
+  submitEvaluation() {
+
+  }
+
+  openActionEvaluationDialog() {
+
+  }
 }

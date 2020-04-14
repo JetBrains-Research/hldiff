@@ -4,6 +4,7 @@ import { DiffComponent } from './diff/diff.component';
 import { SourceCodeComponent } from './source-code/source-code.component';
 import { CodeFragmentComponent } from './code-fragment/code-fragment.component';
 import { ChangeActionComponent } from './change-action/change-action.component';
+import { MaterialModule } from '../material/material.module';
 
 
 
@@ -15,7 +16,8 @@ import { ChangeActionComponent } from './change-action/change-action.component';
     ChangeActionComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule,
   ],
   exports: [
     DiffComponent,

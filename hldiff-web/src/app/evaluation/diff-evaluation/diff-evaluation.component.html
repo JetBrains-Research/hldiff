@@ -17,8 +17,13 @@
   <app-source-code *ngIf="diff" [diff]="diff" [type]="sourceCodeType.BEFORE_CHANGES"></app-source-code>
 
   <div class="diff">
-    <app-change-action *ngFor="let change of diff.highLevelActions" [change]="change"></app-change-action>
+    <app-change-action *ngFor="let change of diff.highLevelActions"
+                       [change]="change"
+                       [checked]="true"
+                       (click)="openActionEvaluationDialog()"></app-change-action>
   </div>
 
   <app-source-code *ngIf="diff" [diff]="diff" [type]="sourceCodeType.AFTER_CHANGES"></app-source-code>
 </div>
+
+<button mat-raised-button color="accent" (submit)="submitEvaluation()">Submit Evaluation</button>

@@ -12,6 +12,9 @@ export class ChangeActionComponent implements OnInit {
   @Input()
   change: Change;
 
+  @Input()
+  checked = false;
+
   @ViewChild('rootChange')
   private element: ElementRef;
 

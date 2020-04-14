@@ -13,6 +13,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatPaginatorModule,
     MatToolbarModule,
     MatIconModule,
+    MatBadgeModule,
   ],
   exports: [
     BrowserAnimationsModule,
@@ -49,6 +51,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatPaginatorModule,
     MatToolbarModule,
     MatIconModule,
+    MatBadgeModule,
   ]
 })
 export class MaterialModule {
