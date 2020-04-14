@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Evaluate this change action</h1>
 
-<form [formGroup]="form" id="evalForm" (ngSubmit)="submit()">
+<div id="evalForm">
   <label id="eval-radio-group-label">How do you evaluate this change grouping</label>
 
   <ul>
@@ -15,8 +15,8 @@
 
   <mat-radio-group aria-labelledby="eval-radio-group-label"
                    class="radio-group"
-                   formControlName="radio">
-    <mat-radio-button value="best" class="radio-button" checked>Well-done</mat-radio-button>
+                   [(ngModel)]="data.qualityValue">
+    <mat-radio-button value="best" class="radio-button">Well-done</mat-radio-button>
     <mat-radio-button value="good" class="radio-button">Good</mat-radio-button>
     <mat-radio-button value="ok" class="radio-button">Ok</mat-radio-button>
     <mat-radio-button value="bad" class="radio-button">Bad</mat-radio-button>
@@ -24,13 +24,12 @@
 
   <mat-form-field class="full-width">
     <mat-label>Comment</mat-label>
-    <textarea matInput placeholder="Comment" formControlName="comment"></textarea>
+    <textarea matInput placeholder="Comment" [(ngModel)]="data.comment"></textarea>
   </mat-form-field>
 
-  <p *ngIf="error" class="error">
-    {{ error }}
-  </p>
+  <button mat-raised-button type="submit" [disabled]="!data.qualityValue"
+          [mat-dialog-close]="{ qualityValue: data.qualityValue, comment: data.comment }"
+          color="primary">Save
+  </button>
 
-  <button mat-raised-button type="submit" [disabled]="!form.valid" color="primary">Save</button>
-
-</form>
+</div>
