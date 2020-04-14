@@ -1,0 +1,24 @@
+<h2>Diff evaluation {{diff.id}}</h2>
+
+<p>
+  Tips on the evaluation
+</p>
+
+<svg id="svg" class="svg" xmlns="http://www.w3.org/2000/svg">
+  <line id="line" class="line"></line>
+</svg>
+
+<svg id="svg2" class="svg" xmlns="http://www.w3.org/2000/svg">
+  <line id="line2" class="line"></line>
+</svg>
+
+
+<div class="wrapper">
+  <app-source-code *ngIf="diff" [diff]="diff" [type]="sourceCodeType.BEFORE_CHANGES"></app-source-code>
+
+  <div class="diff">
+    <app-change-action *ngFor="let change of diff.highLevelActions" [change]="change"></app-change-action>
+  </div>
+
+  <app-source-code *ngIf="diff" [diff]="diff" [type]="sourceCodeType.AFTER_CHANGES"></app-source-code>
+</div>
