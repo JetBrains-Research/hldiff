@@ -13,9 +13,9 @@
       of another change or divided into several different changes</p></li>
   </ul>
 
-  <mat-radio-group [(ngModel)]="selectedModel"
-                   aria-labelledby="eval-radio-group-label"
-                   class="radio-group">
+  <mat-radio-group aria-labelledby="eval-radio-group-label"
+                   class="radio-group"
+                   formControlName="radio">
     <mat-radio-button value="best" class="radio-button" checked>Well-done</mat-radio-button>
     <mat-radio-button value="good" class="radio-button">Good</mat-radio-button>
     <mat-radio-button value="ok" class="radio-button">Ok</mat-radio-button>

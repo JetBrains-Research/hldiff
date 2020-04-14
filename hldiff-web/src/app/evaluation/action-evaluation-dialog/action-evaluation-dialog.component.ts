@@ -19,7 +19,7 @@ export class ActionEvaluationDialogComponent implements OnInit {
 
   form: FormGroup = new FormGroup({
     comment: new FormControl(''),
-    // radio: new FormControl('', [Validators.required]),
+    radio: new FormControl('', [Validators.required]),
   });
 
   selectedModel: string;
