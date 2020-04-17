@@ -10,8 +10,6 @@ import { Observable } from 'rxjs';
 })
 export class EvaluationService {
 
-  evaluations: Map<string, Evaluation> = new Map<string, Evaluation>();
-
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
@@ -22,7 +20,7 @@ export class EvaluationService {
 
   getEvaluation(diffId: string): Observable<Evaluation> {
     return this.http.get<Evaluation>(
-      `${environment.apiUrl}/evaluation?id=diffId&user=${this.authenticationService.getUser().username}`,
+      `${environment.apiUrl}/evaluation?id=${diffId}&author=${this.authenticationService.getUser().username}`,
       this.httpOptions);
   }
 

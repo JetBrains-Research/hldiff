@@ -7,6 +7,6 @@ export interface Evaluation {
 
 export interface ChangeActionEvaluation {
   actionID: number;
-  qualityValue: string;
+  scoreLabel: string;
   comment: string;
 }

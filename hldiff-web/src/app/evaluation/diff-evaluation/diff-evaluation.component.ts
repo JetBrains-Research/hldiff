@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { HLDiff } from '../../hldiff';
 import { HLDiffService } from '../../hldiff.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { AuthenticationService } from '../../users/authentication.service';
 import { switchMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ActionEvaluationDialogComponent, EvalDialogData } from '../action-evaluation-dialog/action-evaluation-dialog.component';
@@ -85,6 +84,10 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
 
     this.evaluationService.submitEvaluation(evaluation).subscribe(
       success => {
+        // TODO Navigate
+      },
+      err => {
+
       }
     );
   }
@@ -94,14 +97,14 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
     console.log(changeEval);
     const dialogRef = this.dialog.open(ActionEvaluationDialogComponent, {
       width: '750px',
-      data: { qualityValue: changeEval.qualityValue, comment: changeEval.comment } as EvalDialogData
+      data: { qualityValue: changeEval.scoreLabel, comment: changeEval.comment } as EvalDialogData
     });
     dialogRef.afterClosed().subscribe((result: EvalDialogData) => {
       if (result && result.qualityValue !== null) {
         this.changeActionsEvaluations.set(change.id, {
           actionID: change.id,
           comment: result.comment,
-          qualityValue: result.qualityValue
+          scoreLabel: result.qualityValue
         } as ChangeActionEvaluation);
         console.log(this.changeActionsEvaluations);
         console.log(this.changeActionsEvaluations.size);
