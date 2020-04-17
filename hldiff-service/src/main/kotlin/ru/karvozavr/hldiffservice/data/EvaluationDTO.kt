@@ -1,11 +1,6 @@
 package ru.karvozavr.hldiffservice.data
 
-import org.springframework.data.annotation.Id
-import org.springframework.data.mongodb.core.mapping.Document
-
-@Document(collection = "diff-evaluation")
-data class DiffEvaluation(
-  @Id
+data class EvaluationDTO(
   var id: String?,
   var diffId: String,
   var author: String,
