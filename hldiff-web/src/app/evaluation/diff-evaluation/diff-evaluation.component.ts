@@ -77,8 +77,6 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
   }
 
   submitEvaluation() {
-    console.log('Heeey!!!!');
-
     this.error = null;
 
     const evaluation = {
@@ -89,16 +87,12 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
 
     this.evaluationService.submitEvaluation(evaluation).subscribe(
       _ => {
-        console.log('Success');
-        this.router.navigate(['/diff', { id: this.diff.id }]);
+        this.router.navigate([`/diff/${this.diff.id}`]);
       },
       err => {
-        console.log('Failure');
         this.error = `Upload failed with error: ${err}`;
       }
     );
-
-    console.log('Submitted');
   }
 
   openActionEvaluationDialog(change: Change) {
