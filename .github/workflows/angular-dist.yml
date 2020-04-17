@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      working-directory: hldiff-web;
+      working-directory: ./hldiff-web
 
     strategy:
       matrix:
