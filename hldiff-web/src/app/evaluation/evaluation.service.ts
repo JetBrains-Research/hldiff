@@ -20,7 +20,7 @@ export class EvaluationService {
 
   getEvaluation(diffId: string): Observable<Evaluation> {
     return this.http.get<Evaluation>(
-      `${environment.apiUrl}/evaluation?id=${diffId}&author=${this.authenticationService.getUser().username}`,
+      `${environment.apiUrl}/evaluation?diffId=${diffId}&author=${this.authenticationService.getUser().username}`,
       this.httpOptions);
   }
 

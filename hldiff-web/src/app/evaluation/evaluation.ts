@@ -1,12 +1,12 @@
 export interface Evaluation {
   author: string;
   diffId: string;
-  actions: Array<ChangeActionEvaluation>;
+  actionsEvaluation: Array<ChangeActionEvaluation>;
   comment: string;
 }
 
 export interface ChangeActionEvaluation {
-  actionID: number;
+  actionId: number;
   scoreLabel: string;
   comment: string;
 }

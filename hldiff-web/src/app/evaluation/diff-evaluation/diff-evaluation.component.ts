@@ -3,8 +3,8 @@ import { SourceCodeType } from '../../visualization/source-code/source-code-type
 import { Observable } from 'rxjs';
 import { HLDiff } from '../../hldiff';
 import { HLDiffService } from '../../hldiff.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { switchMap, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ActionEvaluationDialogComponent, EvalDialogData } from '../action-evaluation-dialog/action-evaluation-dialog.component';
 import { Change } from '../../change';
@@ -22,22 +22,36 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
   diff$: Observable<HLDiff>;
   diff: HLDiff;
 
-  canSubmit = false;
+
 
   changeActionsEvaluations: Map<number, ChangeActionEvaluation> = new Map<number, ChangeActionEvaluation>();
   comment: string;
+  error: string;
 
   constructor(private hldiffService: HLDiffService,
               private route: ActivatedRoute,
               private evaluationService: EvaluationService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private router: Router) {
   }
 
   ngOnInit(): void {
     this.diff$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => this.hldiffService.getDiffById(params.get('id')))
     );
-    this.diff$.subscribe(value => {
+    this.diff$.pipe(
+      tap(value => this.evaluationService.getEvaluation(value.id).subscribe(
+        evaluation => {
+          this.changeActionsEvaluations = new Map(
+            evaluation.actionsEvaluation.map(x => [x.actionId, x] as [number, ChangeActionEvaluation])
+          );
+          this.comment = evaluation.comment;
+        },
+        _ => {
+          this.changeActionsEvaluations = new Map();
+        }
+      ))
+    ).subscribe(value => {
       this.diff = value;
       setTimeout(() => {
         const changesList = document.getElementsByClassName('change');
@@ -47,23 +61,10 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const changedCode = document.getElementsByClassName('changed-code');
-
-
-    const line = document.getElementById('line');
-
-    this.setChangedCodeListeners(changedCode, line);
   }
 
-  setChangedCodeListeners(changedCode, line) {
-    for (const elem of changedCode) {
-      elem.addEventListener('mouseenter', () => {
-        const changeId = elem.className.split(' ').find((v) => v.startsWith('code-change-'));
-
-        const start = elem;
-        const end = document.getElementById(changeId);
-      });
-    }
+  canSubmit(): boolean {
+    return this.changeActionsEvaluations.size === this.diff.highLevelActions.length;
   }
 
   positionChanges(changes) {
@@ -76,25 +77,32 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
   }
 
   submitEvaluation() {
+    console.log('Heeey!!!!');
+
+    this.error = null;
+
     const evaluation = {
       diffId: this.diff.id,
-      actions: Array.from(this.changeActionsEvaluations.values()),
+      actionsEvaluation: Array.from(this.changeActionsEvaluations.values()),
       comment: this.comment,
     } as Evaluation;
 
     this.evaluationService.submitEvaluation(evaluation).subscribe(
-      success => {
-        // TODO Navigate
+      _ => {
+        console.log('Success');
+        this.router.navigate(['/diff', { id: this.diff.id }]);
       },
       err => {
-
+        console.log('Failure');
+        this.error = `Upload failed with error: ${err}`;
       }
     );
+
+    console.log('Submitted');
   }
 
   openActionEvaluationDialog(change: Change) {
     const changeEval = this.changeActionsEvaluations.get(change.id) || {} as ChangeActionEvaluation;
-    console.log(changeEval);
     const dialogRef = this.dialog.open(ActionEvaluationDialogComponent, {
       width: '750px',
       data: { qualityValue: changeEval.scoreLabel, comment: changeEval.comment } as EvalDialogData
@@ -102,14 +110,10 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((result: EvalDialogData) => {
       if (result && result.qualityValue !== null) {
         this.changeActionsEvaluations.set(change.id, {
-          actionID: change.id,
+          actionId: change.id,
           comment: result.comment,
           scoreLabel: result.qualityValue
         } as ChangeActionEvaluation);
-        console.log(this.changeActionsEvaluations);
-        console.log(this.changeActionsEvaluations.size);
-        console.log(this.diff.highLevelActions.length);
-        this.canSubmit = this.changeActionsEvaluations.size === this.diff.highLevelActions.length;
       }
     });
   }

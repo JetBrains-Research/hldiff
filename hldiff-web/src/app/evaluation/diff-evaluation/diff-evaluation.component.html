@@ -9,8 +9,9 @@
     <mat-form-field class="full-width">
       <textarea matInput placeholder="Overall comment" [(ngModel)]="comment"></textarea>
     </mat-form-field>
-    <button [disabled]="!canSubmit" mat-raised-button color="accent" (submit)="submitEvaluation()">Submit Evaluation</button>
-    <p *ngIf="!canSubmit" style="color: red">You have to score all the change actions before submit.</p>
+    <button [disabled]="!canSubmit()" mat-raised-button color="accent" (click)="submitEvaluation()">Submit Evaluation</button>
+    <p *ngIf="!canSubmit()" style="color: red">You have to score all the change actions before submit.</p>
+    <p *ngIf="error" style="color: red">{{error}}</p>
   </mat-card>
 </div>
 
