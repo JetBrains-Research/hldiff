@@ -1,1 +1,13 @@
-<p>file-upload works!</p>
+<h1 mat-dialog-title>Upload Diff</h1>
+<div mat-dialog-content>
+  <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+  <input hidden (change)="onFileSelected()" #fileInput type="file" id="file" multiple>
+  <p>
+    <span>Loaded {{uploaded}} of {{total}}</span>
+    <mat-progress-bar *ngIf="isLoading"
+                      mode="indeterminate"></mat-progress-bar>
+  </p>
+  <p>
+    <span *ngIf="errorMessage" style="color: red">{{errorMessage}}</span>
+  </p>
+</div>

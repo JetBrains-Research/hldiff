@@ -3,11 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { UploadDialogComponent } from '../upload-dialog/upload-dialog.component';
 import { Observable } from 'rxjs';
 import { DiffData } from '../../diff-data';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { DiffDataSource } from '../diff-data-source';
 import { HLDiffService } from '../../hldiff.service';
 import { tap } from 'rxjs/operators';
+import { FileUploadComponent } from '../file-upload/file-upload.component';
 
 @Component({
   selector: 'app-upload',
@@ -42,6 +42,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   openUploadDialog() {
     this.dialog.open(UploadDialogComponent, { width: '750px', data: 'Add Diff' });
+  }
+
+  openFileUploadDialog() {
+    this.dialog.open(FileUploadComponent, { width: '500px', data: 'Upload Diff Files' });
   }
 
   openVisualization(element: DiffData) {
