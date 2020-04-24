@@ -69,4 +69,8 @@ export class DiffComponent implements OnInit, AfterViewInit {
   openEvaluation() {
     window.open(`/diff/evaluation/${this.diff.id}`);
   }
+
+  deleteDiff() {
+    this.hldiffService.removeDiff(this.diff.id).subscribe();
+  }
 }

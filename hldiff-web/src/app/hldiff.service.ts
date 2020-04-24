@@ -44,6 +44,12 @@ export class HLDiffService {
     );
   }
 
+  removeDiff(id: string) {
+    return this.http.delete(environment.apiUrl + '/diff/' + id).pipe(
+      tap(_ => this.log(`Deleted diff with id ${id}`))
+    );
+  }
+
   private log(message: string) {
     this.logger.log(`HLDiffService: ${message}`);
   }
