@@ -29,13 +29,13 @@ class HLDiffCLI(private val args: HLDiffArgs) {
             ++lineNumber
 
             val split = line.trim().split(Regex("\\s+"))
-            if (split.size != 2) {
+            if (split.size != 3) {
                 System.err.println("Incorrect input line $lineNumber:\n$line")
                 line = readLine()
                 continue
             }
 
-            filePairs.add(FilePair(split[0], split[1]))
+            filePairs.add(FilePair(split[0], split[1], split[2]))
             line = readLine()
         }
 
@@ -43,8 +43,7 @@ class HLDiffCLI(private val args: HLDiffArgs) {
     }
 
     private fun runHLDiffForFilePairs(pairs: List<FilePair>, outputDir: Path) {
-        // TODO make it parallel
-        for (pair in pairs) {
+        pairs.parallelStream().forEach { pair ->
             try {
                 val diff = api.getHighLevelDiff(pair.fileBefore, pair.fileAfter)
                 val output = formatDiff(pair.fileBefore, pair.fileAfter, diff)
