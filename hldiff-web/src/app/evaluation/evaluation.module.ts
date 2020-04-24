@@ -7,10 +7,11 @@ import { MaterialModule } from '../material/material.module';
 import { DiffEvaluationComponent } from './diff-evaluation/diff-evaluation.component';
 import { VisualizationModule } from '../visualization/visualization.module';
 import { ActionEvaluationDialogComponent } from './action-evaluation-dialog/action-evaluation-dialog.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 
 @NgModule({
-  declarations: [DashboardComponent, UploadDialogComponent, DiffEvaluationComponent, ActionEvaluationDialogComponent],
+  declarations: [DashboardComponent, UploadDialogComponent, DiffEvaluationComponent, ActionEvaluationDialogComponent, FileUploadComponent],
   imports: [
     CommonModule,
     AppRoutingModule,
