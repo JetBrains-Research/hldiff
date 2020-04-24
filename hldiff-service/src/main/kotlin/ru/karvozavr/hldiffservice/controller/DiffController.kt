@@ -29,4 +29,10 @@ class DiffController(private val diffRepository: DiffRepository) {
   fun uploadDiff(@RequestBody diff: Diff, principal: Mono<Principal>): Mono<Diff> {
     return diffRepository.save(diff)
   }
+
+  @PreAuthorize("hasRole('ADMIN')")
+  @DeleteMapping("/diff/{id}")
+  fun deleteDiffById(@PathVariable(required = true) id: String): Mono<Void> {
+    return diffRepository.deleteById(id)
+  }
 }
