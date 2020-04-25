@@ -35,8 +35,6 @@ export class FileUploadComponent implements OnInit {
       const files = inputNode.files;
       this.total = files.length;
 
-      const diffs = [];
-
       for (const file of files) {
         const reader = new FileReader();
 
@@ -45,7 +43,7 @@ export class FileUploadComponent implements OnInit {
           const diffName = file.name.slice(0, -5);
           console.log(diffName);
           if (JSON.parse(e.target.result)) {
-            diffs.push({ diffData: diff, name: diffName });
+            this.uploadDiff(diff, diffName);
           } else {
             this.errorMessage = `File ${file.name} is not a valid JSON.`;
             console.log(`File ${file.name} is not a valid JSON.`);
@@ -53,7 +51,6 @@ export class FileUploadComponent implements OnInit {
           }
         };
 
-        diffs.forEach(d => this.uploadDiff(d.diffData, d.name));
         reader.readAsText(file);
       }
     }
