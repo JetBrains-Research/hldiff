@@ -18,13 +18,16 @@ class NonStatementActionsGroupingStep : PipelineStep<HighLevelDiff>() {
             group(it)
         }
 
-        groups
-                .map { (node, actions) -> UpdateAction(node, highLevelDiff.languageInfo.getTypeName(node), actions) }
-                .forEach { highLevelDiff.highLevelEditScript.add(it) }
+        groups.forEach { (node, actions) -> createAction(node, actions) }
 
         val restActions = payload.lowLevelEditScript.filter { !payload.isUsed(it) }
 
         return payload.copy(lowLevelEditScript = restActions)
+    }
+
+    private fun createAction(node: ITree, actions: MutableList<Action>) {
+        val action = UpdateAction(node, highLevelDiff.languageInfo.getTypeName(node), actions)
+        highLevelDiff.highLevelEditScript.add(action)
     }
 
     private fun group(action: Action) {
