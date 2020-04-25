@@ -2,7 +2,9 @@ package ru.karvozavr.hldiff.steps
 
 import com.github.gumtreediff.actions.model.Action
 import com.github.gumtreediff.actions.model.Insert
+import com.github.gumtreediff.actions.model.Update
 import com.github.gumtreediff.tree.ITree
+import ru.karvozavr.hldiff.actions.HighLevelAction
 import ru.karvozavr.hldiff.actions.UpdateAction
 import ru.karvozavr.hldiff.data.HighLevelDiff
 import ru.karvozavr.hldiff.pipeline.PipelineStep
@@ -14,7 +16,17 @@ class NonStatementActionsGroupingStep : PipelineStep<HighLevelDiff>() {
 
     override fun processData(payload: HighLevelDiff): HighLevelDiff {
         highLevelDiff = payload
-        payload.lowLevelEditScript.forEach {
+        // filter out Updates on non-leaves
+        val lowLevelEditScript = payload.lowLevelEditScript.filter {
+            if (it is Update && (it.node.children != null && it.node.children.isNotEmpty())) {
+                payload.markUsed(it)
+                false
+            } else {
+                true
+            }
+        }
+
+        lowLevelEditScript.forEach {
             group(it)
         }
 
@@ -26,8 +38,13 @@ class NonStatementActionsGroupingStep : PipelineStep<HighLevelDiff>() {
     }
 
     private fun createAction(node: ITree, actions: MutableList<Action>) {
-        val action = UpdateAction(node, highLevelDiff.languageInfo.getTypeName(node), actions)
-        highLevelDiff.highLevelEditScript.add(action)
+        if (actions.size == 1) {
+            val action = HighLevelAction.of(actions[0], highLevelDiff.languageInfo)
+            highLevelDiff.highLevelEditScript.add(action)
+        } else {
+            val action = UpdateAction(node, highLevelDiff.languageInfo.getTypeName(node), actions)
+            highLevelDiff.highLevelEditScript.add(action)
+        }
     }
 
     private fun group(action: Action) {
