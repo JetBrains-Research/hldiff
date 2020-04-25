@@ -1,6 +1,6 @@
 export interface DiffData {
   id: string;
-  data: string;
+  data: any;
   source: string;
   reviews: Array<string>;
 }

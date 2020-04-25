@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   diffDataSource: DiffDataSource;
 
-  displayedColumns = ['id', 'source', 'open'];
+  displayedColumns = ['id', 'source', 'size', 'open', 'delete'];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -50,6 +50,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   openVisualization(element: DiffData) {
     window.open(`/diff/${element.id}`);
+  }
+
+  deleteDiff(diff) {
+    this.diffService.removeDiff(diff.id).subscribe();
   }
 
   private loadDiffPage() {

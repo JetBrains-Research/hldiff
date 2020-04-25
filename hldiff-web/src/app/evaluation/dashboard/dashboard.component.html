@@ -22,16 +22,26 @@
             <mat-table #table [dataSource]="diffDataSource">
               <ng-container matColumnDef="id">
                 <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+                <mat-cell *matCellDef="let element" >{{element.id}}</mat-cell>
               </ng-container>
               <ng-container matColumnDef="source">
                 <mat-header-cell *matHeaderCellDef>Source</mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.source}}</mat-cell>
               </ng-container>
+              <ng-container matColumnDef="size">
+                <mat-header-cell *matHeaderCellDef>Size</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.data.highLevelActions.length}}</mat-cell>
+              </ng-container>
               <ng-container matColumnDef="open">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                  <button mat-button color="primary" (click)="openVisualization(element)">open visualization</button>
+                  <button mat-button color="primary" (click)="openVisualization(element)">Open</button>
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="delete">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <button mat-button color="warn" (click)="deleteDiff(element)">Delete</button>
                 </mat-cell>
               </ng-container>
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
