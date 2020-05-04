@@ -1,11 +1,7 @@
 <h2>Diff evaluation {{diff.id}}</h2>
 
-<p>
-  Tips on the evaluation
-</p>
-
 <div fxLayout="row" fxLayoutAlign="center center">
-  <mat-card class="card">
+  <mat-card *ngIf="canSubmit()" class="card">
     <mat-form-field class="full-width">
       <textarea matInput placeholder="Overall comment" [(ngModel)]="comment"></textarea>
     </mat-form-field>
@@ -25,15 +21,17 @@
 
 
 <div class="wrapper">
-  <app-source-code *ngIf="diff" [diff]="diff" [type]="sourceCodeType.BEFORE_CHANGES"></app-source-code>
+  <app-source-code id="srcBefore"
+                   *ngIf="diff" [diff]="diff" [type]="sourceCodeType.BEFORE_CHANGES"></app-source-code>
 
-  <div class="diff">
+  <div #changeActions id="changeActions" class="diff">
     <app-change-action *ngFor="let change of diff.highLevelActions"
                        [change]="change"
                        [checked]="changeActionsEvaluations.has(change.id)"
-                       (click)="openActionEvaluationDialog(change)"></app-change-action>
+                       (click)="openActionEvaluationDialog(change)"
+                       (mouseenter)="alignSources(change)"></app-change-action>
   </div>
 
-  <app-source-code *ngIf="diff" [diff]="diff" [type]="sourceCodeType.AFTER_CHANGES"></app-source-code>
+  <app-source-code id="srcAfter" *ngIf="diff" [diff]="diff" [type]="sourceCodeType.AFTER_CHANGES"></app-source-code>
 </div>
 

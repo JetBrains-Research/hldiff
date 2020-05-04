@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SourceCodeType } from '../../visualization/source-code/source-code-type';
 import { Observable } from 'rxjs';
 import { HLDiff } from '../../hldiff';
@@ -13,6 +13,7 @@ import { EvaluationService } from '../evaluation.service';
 
 @Component({
   selector: 'app-diff-evaluation',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './diff-evaluation.component.html',
   styleUrls: ['./diff-evaluation.component.scss']
 })
@@ -21,8 +22,6 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
   sourceCodeType = SourceCodeType;
   diff$: Observable<HLDiff>;
   diff: HLDiff;
-
-
 
   changeActionsEvaluations: Map<number, ChangeActionEvaluation> = new Map<number, ChangeActionEvaluation>();
   comment: string;
@@ -54,8 +53,8 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
     ).subscribe(value => {
       this.diff = value;
       setTimeout(() => {
-        const changesList = document.getElementsByClassName('change');
-        this.positionChanges(changesList);
+        // const changesList = document.getElementsByClassName('change');
+        // this.positionChanges(changesList);
       }, 0);
     });
   }
@@ -67,14 +66,14 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
     return this.changeActionsEvaluations.size === this.diff.highLevelActions.length;
   }
 
-  positionChanges(changes) {
-    const diffContainer = document.querySelectorAll<HTMLElement>('.diff')[0];
-    for (let i = 0; i < changes.length; i++) {
-      const codeChange = document.querySelectorAll<HTMLElement>('.' + changes[i].id)[0];
-      changes[i].style.top = Math.max(codeChange.offsetTop - diffContainer.offsetTop,
-        i > 0 ? changes[i - 1].offsetTop + changes[i - 1].offsetHeight + 10 : 0) + 'px';
-    }
-  }
+  /*  positionChanges(changes) {
+      const diffContainer = document.querySelectorAll<HTMLElement>('.diff')[0];
+      for (let i = 0; i < changes.length; i++) {
+        const codeChange = document.querySelectorAll<HTMLElement>('.' + changes[i].id)[0];
+        changes[i].style.top = Math.max(codeChange.offsetTop - diffContainer.offsetTop,
+          i > 0 ? changes[i - 1].offsetTop + changes[i - 1].offsetHeight + 10 : 0) + 'px';
+      }
+    }*/
 
   submitEvaluation() {
     this.error = null;
@@ -110,5 +109,38 @@ export class DiffEvaluationComponent implements OnInit, AfterViewInit {
         } as ChangeActionEvaluation);
       }
     });
+  }
+
+  alignSources(change: Change) {
+    const changes = document.querySelectorAll<HTMLElement>('.code-change-' + change.id);
+    const changeBefore = changes[0];
+    const changeAfter = changes[1] ? changes[1] : changeBefore;
+
+    const changeAction = document.querySelectorAll<HTMLElement>('#code-change-' + change.id)[0];
+
+
+    const changeActions = document.querySelector<HTMLElement>('#changeActions');
+    const srcBefore = document.querySelector<HTMLElement>('#srcBefore');
+    const srcAfter = document.querySelector<HTMLElement>('#srcAfter');
+
+    const scrollOffsetBefore = changeBefore.offsetTop - srcBefore.offsetTop - changeAction.offsetTop + changeActions.scrollTop;
+    const scrollOffsetAfter = changeAfter.offsetTop - srcAfter.offsetTop - changeAction.offsetTop + changeActions.scrollTop;
+
+    switch (change.type) {
+      case 'add':
+        srcAfter.scroll({ top: scrollOffsetAfter, behavior: 'smooth' });
+        break;
+      case 'delete':
+        srcBefore.scroll({ top: scrollOffsetBefore, behavior: 'smooth' });
+        break;
+      case 'move':
+        srcBefore.scroll({ top: scrollOffsetBefore, behavior: 'smooth' });
+        srcAfter.scroll({ top: scrollOffsetAfter, behavior: 'smooth' });
+        break;
+      case 'update':
+        srcBefore.scroll({ top: scrollOffsetBefore, behavior: 'smooth' });
+        srcAfter.scroll({ top: scrollOffsetAfter, behavior: 'smooth' });
+        break;
+    }
   }
 }

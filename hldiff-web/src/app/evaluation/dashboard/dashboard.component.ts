@@ -16,7 +16,7 @@ import { FileUploadComponent } from '../file-upload/file-upload.component';
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
 
-  private diffs$: Observable<DiffData>;
+  // private diffs$: Observable<DiffData>;
 
   diffDataSource: DiffDataSource;
 
@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   openVisualization(element: DiffData) {
-    window.open(`/diff/${element.id}`);
+    window.open(`/diff/evaluation/${element.id}`);
   }
 
   deleteDiff(diff) {

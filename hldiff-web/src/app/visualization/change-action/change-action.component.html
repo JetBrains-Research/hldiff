@@ -1,8 +1,8 @@
-<div matBadge="🗸" [matBadgeHidden]="!checked" matBadgeSize="medium" matBadgePosition="before" matBadgeColor="primary"
+<div
      #rootChange
      (mouseenter)="enter()"
      (mouseleave)="leave()"
-     [ngClass]="['change', 'change-' + change.type]"
+     [ngClass]="['change', 'change-' + change.type, checked ? 'checked' : 'unchecked']"
      [id]="'code-change-' + change.id">
   {{change.name}}
   <ul *ngIf="change.groupedActions.length > 0">

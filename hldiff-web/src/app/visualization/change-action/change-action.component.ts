@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Change } from '../../change';
-import { drawLine, setAlpha } from '../../draw-utils';
+import { clearLine, drawLine, setAlpha } from '../../draw-utils';
 
 @Component({
   selector: 'app-change-action',
@@ -60,19 +60,15 @@ export class ChangeActionComponent implements OnInit {
   leave(): void {
     const line1 = document.getElementById('line');
     const line2 = document.getElementById('line2');
+
+    clearLine(line1);
+    clearLine(line2);
+
     const codeChanges = document.querySelectorAll<HTMLElement>('.code-change-' + this.change.id);
 
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < codeChanges.length; i++) {
       const change = codeChanges[i];
-      line1.setAttribute('x1', '0');
-      line1.setAttribute('y1', '0');
-      line1.setAttribute('x2', '0');
-      line1.setAttribute('y2', '0');
-      line2.setAttribute('x1', '0');
-      line2.setAttribute('y1', '0');
-      line2.setAttribute('x2', '0');
-      line2.setAttribute('y2', '0');
       change.style.backgroundColor = setAlpha(document.defaultView.getComputedStyle(change, null)['background-color'], 0.3);
     }
   }

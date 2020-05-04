@@ -1,8 +1,13 @@
 .change {
-  position: absolute;
+  //position: absolute;
   width: calc(100% - 20pt);
   padding: 10pt;
+  margin-bottom: 10pt;
   display: block;
+}
+
+.checked {
+  border-bottom: 5px solid blueviolet;
 }
 
 .change-add {
