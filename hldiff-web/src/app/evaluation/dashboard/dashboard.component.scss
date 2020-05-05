@@ -17,13 +17,13 @@
 }
 
 .mat-column-size {
-  flex: 0 0 5%;
-  width: 5%;
+  flex: 0 0 4%;
+  width: 4%;
 }
 
 .mat-column-delete {
-  flex: 0 0 5%;
-  width: 5%;
+  flex: 0 0 3%;
+  width: 3%;
 }
 
 .mat-column-open {
@@ -34,5 +34,10 @@
 .mat-column-id {
   flex: 0 0 15%;
   width: 15%;
+}
+
+.mat-column-reviews {
+  flex: 0 0 3%;
+  width: 3%;
 }
 

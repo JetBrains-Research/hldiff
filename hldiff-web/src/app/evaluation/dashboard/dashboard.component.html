@@ -22,7 +22,7 @@
             <mat-table #table [dataSource]="diffDataSource">
               <ng-container matColumnDef="id">
                 <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
-                <mat-cell *matCellDef="let element" >{{element.id}}</mat-cell>
+                <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
               </ng-container>
               <ng-container matColumnDef="source">
                 <mat-header-cell *matHeaderCellDef>Source</mat-header-cell>
@@ -36,6 +36,12 @@
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-cell *matCellDef="let element">
                   <button mat-button color="primary" (click)="openVisualization(element)">Open</button>
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="reviews">
+                <mat-header-cell *matHeaderCellDef>Reviews</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span [ngStyle]="{'color': (element.reviews.indexOf(getUserName())) ? '#000' : 'green'}">{{element.reviews.length}}</span>
                 </mat-cell>
               </ng-container>
               <ng-container matColumnDef="delete">
