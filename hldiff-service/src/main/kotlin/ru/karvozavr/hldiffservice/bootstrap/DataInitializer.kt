@@ -4,8 +4,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.context.ApplicationListener
 import org.springframework.context.event.ContextRefreshedEvent
 import org.springframework.stereotype.Component
-import ru.karvozavr.hldiffservice.data.Diff
-import ru.karvozavr.hldiffservice.data.DiffEvaluation
 import ru.karvozavr.hldiffservice.repository.DiffRepository
 import ru.karvozavr.hldiffservice.repository.EvaluationRepository
 
