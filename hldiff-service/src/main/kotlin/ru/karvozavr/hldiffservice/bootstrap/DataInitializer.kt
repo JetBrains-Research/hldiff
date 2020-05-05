@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationListener
 import org.springframework.context.event.ContextRefreshedEvent
 import org.springframework.stereotype.Component
 import ru.karvozavr.hldiffservice.data.Diff
-import ru.karvozavr.hldiffservice.data.DiffRepository
+import ru.karvozavr.hldiffservice.repository.DiffRepository
 
 @Component
 class DataInitializer(

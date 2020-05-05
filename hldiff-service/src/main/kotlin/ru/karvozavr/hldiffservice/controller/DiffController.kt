@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import ru.karvozavr.hldiffservice.data.Diff
-import ru.karvozavr.hldiffservice.data.DiffRepository
+import ru.karvozavr.hldiffservice.repository.DiffRepository
 import java.security.Principal
 
 @CrossOrigin(origins = ["*"])

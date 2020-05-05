@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.reactive.server.WebTestClient
 import reactor.core.publisher.Mono
 import ru.karvozavr.hldiffservice.data.Diff
-import ru.karvozavr.hldiffservice.data.DiffRepository
+import ru.karvozavr.hldiffservice.repository.DiffRepository
 import ru.karvozavr.hldiffservice.security.SecurityConfig
 
 @WebFluxTest(excludeAutoConfiguration = [SecurityAutoConfiguration::class, SecurityConfig::class])

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import ru.karvozavr.hldiffservice.data.DiffEvaluation
 import ru.karvozavr.hldiffservice.data.EvaluationDTO
-import ru.karvozavr.hldiffservice.data.EvaluationRepository
+import ru.karvozavr.hldiffservice.repository.EvaluationRepository
 
 @Service
 class EvaluationService(private val evaluationRepository: EvaluationRepository) {
